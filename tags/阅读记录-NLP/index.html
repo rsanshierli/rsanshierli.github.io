@@ -6,52 +6,15 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>《Attention Guided Graph Convolutional Networks for Relation Extraction》阅读记录 | 想吃煎饼果子</title>
+  <title>Tag: 阅读记录, NLP | 想吃煎饼果子</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="&amp;nbsp;Abstract 依存树传达了丰富的结构信息，事实证明，这些信息对于提取文本中实体之间的关系很有用。然而，如何有效地利用相关信息，同时又从依存树中忽略无关信息仍然是一个具有挑战性的研究问题。现有的采用基于规则的硬修剪策略来选择相关的部分依赖结构的方法不总是产生最佳结果。对此，本文提出 Attention Guided GCN（AGGCN），这是一个直接将完整依存树作为输入的新颖模型。该">
-<meta property="og:type" content="article">
-<meta property="og:title" content="《Attention Guided Graph Convolutional Networks for Relation Extraction》阅读记录">
-<meta property="og:url" content="http://yoursite.com/2020/03/04/article/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="想吃煎饼果子">
+<meta property="og:url" content="http://yoursite.com/tags/%E9%98%85%E8%AF%BB%E8%AE%B0%E5%BD%95-NLP/index.html">
 <meta property="og:site_name" content="想吃煎饼果子">
-<meta property="og:description" content="&amp;nbsp;Abstract 依存树传达了丰富的结构信息，事实证明，这些信息对于提取文本中实体之间的关系很有用。然而，如何有效地利用相关信息，同时又从依存树中忽略无关信息仍然是一个具有挑战性的研究问题。现有的采用基于规则的硬修剪策略来选择相关的部分依赖结构的方法不总是产生最佳结果。对此，本文提出 Attention Guided GCN（AGGCN），这是一个直接将完整依存树作为输入的新颖模型。该">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20191105212132141.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://private.codecogs.com/gif.latex?A_%7Bij%7D">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/2019110615523579.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20191106160205674.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://private.codecogs.com/gif.latex?g_%7Bj%7D%5E%7B%5Cleft%20(%20l%20%5Cright%20)%7D">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20191106172141308.png">
-<meta property="og:image" content="https://private.codecogs.com/gif.latex?d_%7Bhidden%7D">
-<meta property="og:image" content="https://private.codecogs.com/gif.latex?d_%7Bhidden%7D%253Dd/L">
-<meta property="og:image" content="https://private.codecogs.com/gif.latex?d_%7Bhidden%7D">
-<meta property="og:image" content="https://private.codecogs.com/gif.latex?%5Cwidetilde%7BA%7D%5E%7B%5Cleft%20(%20t%20%5Cright%20)%7D">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20191106200938418.png">
-<meta property="og:image" content="https://private.codecogs.com/gif.latex?%5Cwidetilde%7BA%7D%5E%7B%5Cleft%20(%20t%20%5Cright%20)%7D">
-<meta property="og:image" content="https://private.codecogs.com/gif.latex?d_%7Bhidden%7D">
-<meta property="og:image" content="https://private.codecogs.com/gif.latex?W_%7Bt%7D%5E%7B%5Cleft%20(%20l%20%5Cright%20)%7D%5Cin%20%5Cmathbb%7BR%7D%5E%7Bd_%7Bhidden%7D%5Ctimes%20d%5E%7B%5Cleft%20(%20l%20%5Cright%20)%7D%7D">
-<meta property="og:image" content="https://private.codecogs.com/gif.latex?d%5E%7B%5Cleft%20(%20l%20%5Cright%20)%7D%253Dd&amp;plus;d_%7Bhidden%7D%5Ctimes%20%5Cleft%20(%20l-1%20%5Cright%20)">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20191106202157299.png">
-<meta property="og:image" content="https://private.codecogs.com/gif.latex?h_%7Bout%7D">
-<meta property="og:image" content="https://private.codecogs.com/gif.latex?h_%7Bout%7D%253D%5Cleft%20%5B%20h%5E%7B%5Cleft%20(%201%20%5Cright%20)%7D%253B%5Ccdots%20%253Bh%5E%7B%5Cleft%20(%20N%20%5Cright%20)%7D%20%5Cright%20%5D%5Cin%20%5Cmathbb%7BR%7D%5E%7Bd%5Ctimes%20N%7D">
-<meta property="og:image" content="https://private.codecogs.com/gif.latex?W_%7Bcomb%7D%5Cin%20%5Cmathbb%7BR%7D%5E%7B%5Cleft%20(%20d%5Ctimes%20N%20%5Cright%20)%7D%5Ctimes%20d">
-<meta property="og:image" content="https://private.codecogs.com/gif.latex?h_%7Bcomb%7D">
-<meta property="og:image" content="https://private.codecogs.com/gif.latex?h_%7Bsent%7D%253Df%5Cleft%20(%20h_%7Bmask%7D%20%5Cright%20)%253Df%5Cleft%20(%20AGGCN%5Cleft%20(%20x%20%5Cright%20)%20%5Cright%20)%5Cleft%20(%206%20%5Cright%20)">
-<meta property="og:image" content="https://private.codecogs.com/gif.latex?h_%7Bmask%7D">
-<meta property="og:image" content="https://private.codecogs.com/gif.latex?f%253A%5Cmathbb%7BR%7D%5E%7Bd%5Ctimes%20n%7D%5Crightarrow%20%5Cmathbb%7BR%7D%5E%7Bd%5Ctimes%201%7D">
-<meta property="og:image" content="https://private.codecogs.com/gif.latex?h_%7Be_%7Bi%7D%7D%253Df%5Cleft%20(%20h_%7Be_%7Bi%7D%7D%20%5Cright%20)%5Cleft%20(%207%20%5Cright%20)">
-<meta property="og:image" content="https://private.codecogs.com/gif.latex?h_%7Be_%7Bi%7D%7D">
-<meta property="og:image" content="https://private.codecogs.com/gif.latex?h_%7Bfinal%7D">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20191106205511860.png">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20191107104833593.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20191107110519765.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20191107151215670.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
-<meta property="og:image" content="https://img-blog.csdnimg.cn/20191107151245569.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
-<meta property="article:published_time" content="2020-03-04T10:51:10.000Z">
-<meta property="article:modified_time" content="2020-03-04T10:55:10.007Z">
 <meta property="article:author" content="R">
-<meta property="article:tag" content="论文记录, NLP">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191105212132141.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
   
     <link rel="alternative" href="/atom.xml" title="想吃煎饼果子" type="application/atom+xml">
   
@@ -191,230 +154,60 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-article" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
+            
   
-    <h1 class="article-title" itemprop="name">
-      《Attention Guided Graph Convolutional Networks for Relation Extraction》阅读记录
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2020" class="archive-year">2020</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	<a href="/2020/03/04/article-4/" class="archive-article-date">
+  	<time datetime="2020-03-04T10:56:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-04</time>
+</a>
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2020/03/04/article-4/">《Extracting Relational Facts by an End-to-End Neural Model with Copy Mechanism》记录</a>
     </h1>
   
 
-        
-        <a href="/2020/03/04/article/" class="archive-article-date">
-  	<time datetime="2020-03-04T10:51:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-04</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="%C2%A0Abstract"><a name="t1"></a><a name="t1"></a>&nbsp;Abstract</h1>
-<p style="text-indent:33px;">依存树传达了丰富的结构信息，事实证明，这些信息对于提取文本中实体之间的关系很有用。然而，<strong>如何有效地利用相关信息，同时又从依存</strong><strong>树中忽略无关信息仍然是一个具有挑战性的研究问题</strong>。现有的采用基于规则的<strong>硬修剪</strong>策略来选择相关的部分依赖结构的方法不总是产生最佳结果。对此，本文提出 Attention Guided GCN（AGGCN），这是一个直接<strong>将完整依存树作为输入</strong>的新颖模型。该模型可以理解为一种<strong>软修剪</strong>方法，可以<strong>自动学习如何有选择地关注对关系提取任务有用的相关子结构</strong>。在包括交叉句子n元关系提取和大规模句子级关系提取在内的各种任务上的大量结果表明，AGGCN模型能够更好地利用完整依存树的结构信息，比以前的方法具有明显更好的结果。</p>
-<h1><a name="t2"></a><a name="t2"></a>1&nbsp; Introduction</h1>
-<p style="text-indent:33px;">关系提取旨在检测文本中实体之间的关系，在各种自然语言处理应用程序中都有应用，包括生物医学知识发现、知识库填充以及问题解答。图1显示了一个用两个句子表达三个实体L858E，EGFR和 gefitinib 之间的关联敏感度的示例。大多数现有的关系提取模型可以分为两类：基于序列的和基于依赖的。基于序列的模型仅对单词序列起作用，而基于依赖的模型将依存树合并到模型中。与基于序列的模型相比，<strong>基于依存树的模型能够捕获表面看不到的非局部句法关系</strong>，并存在各种修剪策略来提取依赖信息，以进一步提升表现。Xu等人仅在完整树实体之间的最短依赖路径上应用神经网络，Miwa 和 Bansal 将整个树缩减为实体的最低公共祖先（LCA）以下的子树。 Zhang等人在修剪的树上应用图卷积网络（GCN）模型，该树包含与LCA子树中依赖关系路径上相距为K的token。</p>
-<p style="text-indent:33px;">但是，基于规则的修剪策略可能会消除完整树中的一些重要信息。图1显示了跨语句n元关系提取中的一个示例，该示例中如果模型仅考虑修剪的树，则将排除关键token <em>“partial response”</em>。理想情况下，模型应该能够学习如何在完整树中平衡地选择和排除信息。本文提出了Attention Guided GCN（AGGCN），该网络可直接在完整树上运行。直观上看是一种“软修剪”策略，<span style="color:#f33b45;"><strong>将原始依存树转换为完全连接的边加权图</strong></span>。这些权重可以看作是节点之间相关性的强度，<strong>可以通过使用自我注意机制以端到端的方式进行学习</strong>。为了编码一个<strong>更大</strong>的完全连接图，则进行GCN模型的<strong>密集连接</strong>。对于GCN，L层用以捕获距离 L hops的邻居信息。浅层GCN模型可能无法捕获大图中非局部的相互关系。虽然更深的GCN可以捕获图形的更丰富的邻域信息，但从经验上看使用2层模型可以实现最佳性能。借助密集连接能够以较大的深度训练AGGCN模型，从而可以捕获丰富的本地和非本地依赖信息。实验表明，AGGCN模型能够针对各种任务实现更好的性能，对于跨句关系提取任务（多类三元和二元关系提取）该模型在准确性方面比当前的最新模型分别高8％和6％，对于大规模句子级提取任务（TACREDdataset）也优于其他模型，这表明该模型在大型训练集上的有效性。</p>
-<p style="text-indent:0;"><strong>贡献：</strong><br>
-• 提出了AGGCN，它可以<strong>以端到端的方式学习“软修剪”策略</strong>，从而学习如何选择和丢弃信息。结合密集连接能够学习更好的图表示。<br>
-• 与以前的GCN相比，AGGCN模型无需任何额外的计算开销就能获得最优的结果。与树结构模型不同，它可以有效地<strong>并行</strong>应用于依赖树。</p>
-
-<p style="text-align:center;"><img alt="" class="has" height="488" src="https://img-blog.csdnimg.cn/20191105212132141.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="1200"></p>
-<blockquote>
-<p style="text-indent:0;">图1：两个句子的依存树示例，表示三个实体之间的关系。这些实体之间的最短依赖路径以粗体（边和标记）突出显示。实体LCA子树的根节点是 <em>present，</em>虚线边表示距离子树 K=1 的token，注意 <em>partial response。</em></p>
-</blockquote>
-
-<h1><a name="t3"></a><a name="t3"></a>2&nbsp; Attention Guided GCNs</h1>
-<h2><a name="t4"></a><a name="t4"></a>2.2&nbsp; Attention Guided Layers （暂记为注意引导层）</h2>
-<p style="text-indent:33px;">AGGCN模型<strong>由M个相同的块组成</strong>，如图2所示。<strong>每个块由三种类型的层组成：注意引导层，密集连接层和线性组合层</strong>。已知大多数现有的修剪策略都是<strong>预先定义</strong>的，将整棵树修剪成一个子树，在该子树的基础上构造邻接矩阵。实际上这样的策略也可以看作是一种hard attention 的形式，其中连接不在结果子树上的节点的边将被直接分配零权重，这样的策略可能会从原始的依赖树中消除相关信息。本文在注意力引导层中使用“软修剪”策略，该策略<strong>将权重分配给所有边，权重可以由模型以端到端的方式学习</strong>。在注意力引导层中，<span style="color:#f33b45;"><strong>通过构造注意力引导邻接矩阵A将原始依存树转换为完全连接的边加权图</strong></span>。每个A对应于某个完全连接的图，每个&nbsp;<img alt="A_{ij}" class="mathcode" src="https://private.codecogs.com/gif.latex?A_%7Bij%7D">&nbsp;是从节点i到节点j的边权重。如图2所示，A（1）表示完全连接的图G（1）。通过使用<strong>自我注意力机制</strong>来构建A，自我注意力机制是一种捕获单个序列中两个任意位置之间的相互关系的注意力机制。一旦获得A就可以将其用作计算后面的图卷积层的输入。A的大小与原始邻接矩阵相同（n×n），不涉及额外的计算开销。注意引导层的关键思想是使用注意力来引导节点之间的关系，尤其是对于那些通过间接多跳路径直接连接的节点。这些软关系可以通过模型中的可区分函数来捕获。这里使用<strong>多头注意力</strong>来计算，使模型可以共同关注来自不同表示子空间的信息，该计算涉及一个查询和一组键值对，将输出计算为值的加权总和，其中权重是通过具有相应键的查询函数来计算的。</p>
-<p style="text-align:center;"><img alt="" class="has" height="83" src="https://img-blog.csdnimg.cn/2019110615523579.png" width="500"></p>
-<p style="text-indent:0;">其中Q和K都等于AGGCN模型的第l-1层的集合表示h（l-1），A（t）是与第t个头部相对应的第t个注意引导的邻接矩阵，最多可以构造N个矩阵，其中N是一个超参数。 图2显示了一个示例，该示例将原始邻接矩阵转换为多个注意引导的邻接矩阵，输入依赖树被转换为多个完全连接的边加权图。 在实践中将原始邻接矩阵视为初始化，以便可以在节点表示形式中捕获依赖关系信息，以便以后进行注意力计算。 从第二个块开始包含注意引导层。</p>
-<p style="text-align:center;"><img alt="" class="has" height="602" src="https://img-blog.csdnimg.cn/20191106160205674.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="1200"></p>
-<blockquote>
-<p style="text-indent:0;">图2：AGGCN模型，示例语句及其依赖树。由M个相同的块组成，每个块具有三种类型的层，如右图所示<strong>。每个块都将节点嵌入和表示图的邻接矩阵作为输入</strong>。如左下图所示，<strong>使用多头注意力机制构建N个注意引导的邻接矩阵</strong>，原始的依赖树被转换为N个不同的完全连接的边加权图（为简化起见省略自循环），边附近的数字表示矩阵中的权重。结果矩阵被送到N个独立的紧密连接层中，从而生成新的表示形式。左上方显示了一个紧密连接层的示例，其中子层的数量L为3（L is a hyper-parameter），<strong>每个子层将所有先前的输出连接为输入</strong>。应用线性组合将N个紧密连接的层的输出组合成隐藏的表示形式。</p>
-</blockquote>
-
-<h2><a name="t5"></a><a name="t5"></a>2.3&nbsp; Densely Connected Layer</h2>
-<p style="text-indent:33px;">与先前的修剪策略不同（生成的结构比原始结构小），<strong>注意力引导层会输出较大的完全连接图</strong>。在AGGCN模型中引入密集连接，以便在大型图上<strong>捕获更多结构信息</strong>，训练<strong>更深的模型</strong>，从而可以<strong>捕获丰富的局部和非局部信息</strong>，以学习<strong>更好的图表示</strong>形式。密集连接如图2所示，直连接是从任意层引入到其所有先前的层。将 <img alt="g_{j}^{\left ( l \right )}" class="mathcode" src="https://private.codecogs.com/gif.latex?g_%7Bj%7D%5E%7B%5Cleft%20%28%20l%20%5Cright%20%29%7D">&nbsp;定义为初始节点表示和1到 l-1层中产生的节点表示的级联：</p>
-<p style="text-align:center;"><img alt="" class="has" height="56" src="https://img-blog.csdnimg.cn/20191106172141308.png" width="400"></p>
-<p style="text-indent:0;">实际上每个密集连接的层都有L个子层，这些子层&nbsp;<img alt="d_{hidden}" class="mathcode" src="https://private.codecogs.com/gif.latex?d_%7Bhidden%7D">&nbsp;的维度由 L 和输入特征维度 d 决定。在AGGCN中<strong>&nbsp;<img alt="d_{hidden}=d/L" class="mathcode" src="https://private.codecogs.com/gif.latex?d_%7Bhidden%7D%3Dd/L"></strong>。例如，如果密集连接层具有3个子层，并且输入维度为300，则每个子层的 hidden 维度将变为&nbsp;<img alt="d_{hidden}" class="mathcode" src="https://private.codecogs.com/gif.latex?d_%7Bhidden%7D">&nbsp;= d / L = 300/3 =100。然后将每个子层的输出连接在一起以形成新的表示形式，最终输出尺寸为300（3×100）。与GCN模型的 hidden 维度大于或等于输入维度不同，<strong>AGGCN模型会随着层数的增加而缩小 hidden 维度</strong>，以类似于DenseNets一样提高参数效率。由于有N个不同的注意力引导邻接矩阵，因此需要N个独立的密集连接层。因此修改每个层的计算如下（对于第t个矩阵&nbsp;<img alt="\widetilde{A}^{\left ( t \right )}" class="mathcode" src="https://private.codecogs.com/gif.latex?%5Cwidetilde%7BA%7D%5E%7B%5Cleft%20%28%20t%20%5Cright%20%29%7D">）：</p>
-<p style="text-align:center;"><img alt="" class="has" height="74" src="https://img-blog.csdnimg.cn/20191106200938418.png" width="350"></p>
-<p style="text-indent:0;">其中t = 1，...，N 并选择与注意引导邻接矩阵&nbsp;<img alt="\widetilde{A}^{\left ( t \right )}" class="mathcode" src="https://private.codecogs.com/gif.latex?%5Cwidetilde%7BA%7D%5E%7B%5Cleft%20%28%20t%20%5Cright%20%29%7D">&nbsp;相关的权重矩阵和偏差项。权重矩阵的列维度每子层增加&nbsp;<img alt="d_{hidden}" class="mathcode" src="https://private.codecogs.com/gif.latex?d_%7Bhidden%7D">&nbsp;，即<img alt="W_{t}^{\left ( l \right )}\in \mathbb{R}^{d_{hidden}\times d^{\left ( l \right )}}" class="mathcode" src="https://private.codecogs.com/gif.latex?W_%7Bt%7D%5E%7B%5Cleft%20%28%20l%20%5Cright%20%29%7D%5Cin%20%5Cmathbb%7BR%7D%5E%7Bd_%7Bhidden%7D%5Ctimes%20d%5E%7B%5Cleft%20%28%20l%20%5Cright%20%29%7D%7D">，其中&nbsp;<img alt="d^{\left ( l \right )}=d+d_{hidden}\times \left ( l-1 \right )" class="mathcode" src="https://private.codecogs.com/gif.latex?d%5E%7B%5Cleft%20%28%20l%20%5Cright%20%29%7D%3Dd&amp;plus;d_%7Bhidden%7D%5Ctimes%20%5Cleft%20%28%20l-1%20%5Cright%20%29">。</p>
-<h2><a name="t6"></a><a name="t6"></a>2.4&nbsp; Linear Combination Layer</h2>
-<p style="text-indent:33px;">AGGCN模型包括一个线性组合层，以整合N个不同的密集连接层的表示。线性组合层的输出定义为：</p>
-<p style="text-align:center;"><img alt="" class="has" height="63" src="https://img-blog.csdnimg.cn/20191106202157299.png" width="400"></p>
-<p style="text-indent:0;">其中&nbsp;<img alt="h_{out}" class="mathcode" src="https://private.codecogs.com/gif.latex?h_%7Bout%7D">&nbsp;是通过合并来自N个独立密集连接层的输出而得到的输出，即 <img alt="h_{out}=\left [ h^{\left ( 1 \right )};\cdots ;h^{\left ( N \right )} \right ]\in \mathbb{R}^{d\times N}" class="mathcode" src="https://private.codecogs.com/gif.latex?h_%7Bout%7D%3D%5Cleft%20%5B%20h%5E%7B%5Cleft%20%28%201%20%5Cright%20%29%7D%3B%5Ccdots%20%3Bh%5E%7B%5Cleft%20%28%20N%20%5Cright%20%29%7D%20%5Cright%20%5D%5Cin%20%5Cmathbb%7BR%7D%5E%7Bd%5Ctimes%20N%7D">。 <img alt="W_{comb}\in \mathbb{R}^{\left ( d\times N \right )}\times d" class="mathcode" src="https://private.codecogs.com/gif.latex?W_%7Bcomb%7D%5Cin%20%5Cmathbb%7BR%7D%5E%7B%5Cleft%20%28%20d%5Ctimes%20N%20%5Cright%20%29%7D%5Ctimes%20d">是权重矩阵，<img alt="h_{comb}" class="mathcode" src="https://private.codecogs.com/gif.latex?h_%7Bcomb%7D">&nbsp;是线性变换的偏置向量。</p>
-<h2><a name="t7"></a><a name="t7"></a>2.5&nbsp; AGGCNS for Relation Extraction</h2>
-<p style="text-indent:33px;">在依赖树上应用AGGCN模型获得了所有token的隐藏表示，给定这些表示形式，预测实体之间的关系。将句子表示和实体表示连接起来以获得最终的分类表示。首先需要获取句子表示形式，<img alt="h_{sent}=f\left ( h_{mask} \right )=f\left ( AGGCN\left ( x \right ) \right )\left ( 6 \right )" class="mathcode" src="https://private.codecogs.com/gif.latex?h_%7Bsent%7D%3Df%5Cleft%20%28%20h_%7Bmask%7D%20%5Cright%20%29%3Df%5Cleft%20%28%20AGGCN%5Cleft%20%28%20x%20%5Cright%20%29%20%5Cright%20%29%5Cleft%20%28%206%20%5Cright%20%29">，其中&nbsp;<img alt="h_{mask}" class="mathcode" src="https://private.codecogs.com/gif.latex?h_%7Bmask%7D">&nbsp;表示掩码集合的隐藏表示，<strong>掩码旨仅选择不是句子中实体的token的表示形式</strong>。<img alt="f:\mathbb{R}^{d\times n}\rightarrow \mathbb{R}^{d\times 1}" class="mathcode" src="https://private.codecogs.com/gif.latex?f%3A%5Cmathbb%7BR%7D%5E%7Bd%5Ctimes%20n%7D%5Crightarrow%20%5Cmathbb%7BR%7D%5E%7Bd%5Ctimes%201%7D">&nbsp;是最大池化函数，可将n个输出向量映射为1个句子向量。同样可以得到实体表示，对于第 i 个实体，其表示为：<img alt="h_{e_{i}}=f\left ( h_{e_{i}} \right )\left ( 7 \right )" class="mathcode" src="https://private.codecogs.com/gif.latex?h_%7Be_%7Bi%7D%7D%3Df%5Cleft%20%28%20h_%7Be_%7Bi%7D%7D%20%5Cright%20%29%5Cleft%20%28%207%20%5Cright%20%29">，其中&nbsp;<img alt="h_{e_{i}}" class="mathcode" src="https://private.codecogs.com/gif.latex?h_%7Be_%7Bi%7D%7D">&nbsp;表示对应于第i个实体的隐藏表示。实体表示与句子表示合并以形成新的表示。将前馈神经网络应用于级联表示，<img alt="h_{final}" class="mathcode" src="https://private.codecogs.com/gif.latex?h_%7Bfinal%7D">用作逻辑回归分类器的输入以进行预测。</p>
-<p style="text-align:center;"><img alt="" class="has" height="71" src="https://img-blog.csdnimg.cn/20191106205511860.png" width="400"></p>
-<h1><a name="t8"></a><a name="t8"></a>3&nbsp; Experiments</h1>
-<h2><a name="t9"></a><a name="t9"></a>3.1&nbsp; Data</h2>
-<p style="text-indent:33px;">评估模型在两个任务上的性能，即跨句子n元关系提取和句子级关系提取。对于跨语句n元关系提取任务，引入的数据集，其中包含6987个三元关系实例和6087个从PubMed中提取的二元关系实例。大多数实例包含多个句子，并且每个实例都分配有五个标签之一，包括：&nbsp;“resistance or nonresponse”, “sensitivity”, “response”, “resistance”and“None”。考虑两个特定的评估任务，即二分类n元关系提取和多类n元关系提取。对于二分类n元关系提取，通过将四个关系类分组为“Yes”并将“None”视为“No”来对多类标签进行二值化。对于句子级关系提取任务，按照Zhang等人在TACRED数据集和Semeval-10 Task 8的实验设置，TACRED数据集拥有超过106K实例，引入了41种关系类型和特殊的“no relation”类型来描述实例中提及对之间的关系。主题分为个人和组织，而对象分为16种细粒度类型，包括日期，位置等。Semeval-10 Tasl 8是一个公共数据集，其中包含10,717个实例（具有9个关系）和特殊的“other” 类。</p>
-<h2><a name="t10"></a><a name="t10"></a>3.2&nbsp; Results &nbsp;</h2>
-<p><strong>Cross-Sentence n-ary Relation Extraction</strong></p>
-<p style="text-indent:33px;">这些结果表明，与之前的基于完整树的方法（例如GS GLSTM）相比，AGGCN能够从基础图结构中提取更多信息，以通过图卷积学习更富表现力的表示形式。尽管可以通过修剪树木提高其性能，但AGGCN的性能也优于GCN。作者认为这是由于紧密连接层和注意引导层的结合所致，密集的连接可以促进大型图形中的信息传播，从而使AGGCN可以有效地从长距离依赖中学习而无需修剪技术。同时，注意力引导层可以进一步提取相关信息，并从密集连接层学习到的表示中滤除噪声。对于多类分类任务，这种细粒度的分类任务比粗粒度的分类任务困难得多，结果所有模型的性能都会大大降低。但是对于三元和二元关系，AGGCN模型仍然比GS GLSTM模型分别获得8.0和5.7分。与所有GCN模型相比，AGGCN具有更好的测试准确性，这进一步证明了其从完整树中学习更好表示的能力。</p>
-<p style="text-align:center;"><img alt="" class="has" height="545" src="https://img-blog.csdnimg.cn/20191107104833593.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="900"></p>
-<p style="text-indent:0;"><strong>Sentence-level Relation Extraction</strong></p>
-<p style="text-align:center;"><img alt="" class="has" height="414" src="https://img-blog.csdnimg.cn/20191107110519765.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="800"></p>
-<h2><a name="t11"></a><a name="t11"></a>3.3&nbsp; Analysis and Discussion</h2>
-<p style="text-indent:0;"><strong>Ablation Study&nbsp;</strong>&nbsp;使用TACRED数据集上性能最佳的C-AGGCN模型来检查两个主要组件（即密集连接的层和注意引导层）的贡献。表4示出了结果。 可以看到添加注意引导层或密集连接的层可以提高模型的性能，这表明两个层都可以帮助GCN学习更好的信息聚合，从而为图形提供更好的表示，在注意引导层似乎起着更重要的作用。前馈层在我们的模型中是有效的，如果没有前馈层，结果将降至F1得分67.8。</p>
-<p style="text-indent:0;"><strong>Performance with Purned Trees</strong>&nbsp;&nbsp;表5显示了带有修剪树的C-AGGCN模型的性能，其中K表示修剪树包含的token与LCA子树中的依赖路径的距离最大为K。所有具有K变量值的C-AGGCN模型都能够胜过最新的C-GCN模型（表2中报告）。 具体来说在与K = 1相同的设置下，C-AGGCN的得分比C-GCN高出1.5分。这表明在密集连接层和注意引导层的组合下，对于下游任务C-AGGCN比C-GCN可以学习更好的表示。 此外，具有完整树的C-AGGCN的性能优于具有修剪树的所有C-AGGCN，这些结果进一步表明，在利用完整树信息方面，“软修剪”策略优于硬修剪策略。</p>
-<p style="text-indent:0;"><strong>Performance against Sentence Length</strong>&nbsp;&nbsp;图4显示了三个模型在不同句子长度下的F1分数。将句子的长度分为五个类别（&lt;20, [20、30], [30、40), [40、50), ≥50)。通常具有完整树的C-AGGCN在各种句子长度方面的表现要优于具有修剪树的C-AGGCN和C-GCN。在大多数情况下，具有修剪树的C-AGGCN的效果要优于C-GCN。当句子长度增加时，C-AGGCN对修剪的树的改进效果会下降，可以通过使用完整树来避免这种性能下降，因为完整树会提供有关隐含图结构的更多信息。随着句子长度的增加，依赖关系图随着包含更多节点而变得更大，表明C-AGGCN可以从较大的图（完整树）中受益更多。</p>
-<p style="text-align:center;"><img alt="" class="has" height="417" src="https://img-blog.csdnimg.cn/20191107151215670.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="500"></p>
-<p style="text-indent:0;"><strong>Performance against Training Data Size&nbsp;&nbsp;</strong>图3显示了C-AGGCN和CGCN在不同训练设置下的性能。考虑五个训练设置（训练数据的20％，40％，60％，80％，100％)。在相同数量的训练数据下，C-AGGCN在性能上都优于C-GCN。当训练数据的大小增加时，可以观察到性能差距变得更加明显。特别是使用80％的训练数据，C-AGGCN模型能够获得66.5的F1 Score，高于整个数据集上训练的C-GCN。</p>
-<p style="text-align:center;"><img alt="" class="has" height="453" src="https://img-blog.csdnimg.cn/20191107151245569.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="1100"></p>
-<h1><a name="t12"></a><a name="t12"></a>5&nbsp; Clonclusion</h1>
-<p style="text-indent:0;">&nbsp;</p>
-<p style="text-indent:0;">&nbsp;</p>
-      
-
-      
-        <div class="page-reward">
-          <a href="javascript:;" class="page-reward-btn tooltip-top">
-            <div class="tooltip tooltip-east">
-            <span class="tooltip-item">
-              赏
-            </span>
-            <span class="tooltip-content">
-              <span class="tooltip-text">
-                <span class="tooltip-inner">
-                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
-                  <div class="reward-box">
-                    
-                    
-                  </div>
-                </span>
-              </span>
-            </span>
-          </div>
-          </a>
-        </div>
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
+        <div class="article-info info-on-right">
+          
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">论文记录, NLP</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">阅读记录, NLP</a>
         		</li>
       		
 		</ul>
 	</div>
 
-      
+          
 
-      
-
-      
-        
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a>
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/03/04/article/" alt="微信分享二维码">
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-      
-      <div class="clearfix"></div>
-    </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-  
-<nav id="article-nav">
-  
-    <a href="/2020/03/04/article-3/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          《Effective Modeling of Encoder-Decoder Architecturefor Joint Entity and Relation Extraction》
-        
-      </div>
-    </a>
   
   
-    <a href="/2020/03/04/article-2/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">《Graph Neural Networks with Generated Parameters for Relation Extraction》阅读笔记</div>
-      <i class="icon-circle-right"></i>
-    </a>
-  
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-  
-  
+    </div></section>
   
 
-  
-
-  
-
-  
+    
 
 
           </div>
@@ -437,9 +230,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,

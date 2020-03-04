@@ -6,15 +6,42 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Tag: 测试 | 想吃煎饼果子</title>
+  <title>《Extracting Relational Facts by an End-to-End Neural Model with Copy Mechanism》记录 | 想吃煎饼果子</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="想吃煎饼果子">
-<meta property="og:url" content="http://yoursite.com/tags/%E6%B5%8B%E8%AF%95/index.html">
+  <meta name="description" content="Abstract  句子中的关系事实通常很复杂，不同的关系三元组在句子中存有实体重叠。根据三元组重叠度将句子分为三种类型，包括Normal，EntityPairOverlap 和 Single">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Extracting Relational Facts by an End-to-End Neural Model with Copy Mechanism》记录">
+<meta property="og:url" content="http://yoursite.com/2020/03/04/article-4/index.html">
 <meta property="og:site_name" content="想吃煎饼果子">
+<meta property="og:description" content="Abstract  句子中的关系事实通常很复杂，不同的关系三元组在句子中存有实体重叠。根据三元组重叠度将句子分为三种类型，包括Normal，EntityPairOverlap 和 Single">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191223154146830.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191223162423231.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?O%5E%7BE%7D%253D%20%5Cleft%20%5B%20o_%7B1%7D%5E%7BE%7D%252C%5Ccdots%20%252Co_%7Bn%7D%5E%7BE%7D%20%5Cright%20%5D%252Co_%7Bt%7D%5E%7BE%7D%253D%5Cleft%20%5B%20%5Coverrightarrow%7Bo_%7Bt%7D%5E%7BE%7D%7D%252C%5Coverleftarrow%7Bo_%7Bn-t&amp;plus;1%7D%5E%7BE%7D%7D%20%5Cright%20%5D">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191223165415874.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?o_%7Bt%7D%5E%7BD%7D%252Ch_%7Bt%7D%5E%7BD%7D%20%253D%20g%5Cleft%20(%20u_%7Bt%7D%252C%20h_%7Bt-1%7D%5E%7BD%7D%20%5Cright%20)">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?h_%7B0%7D%5E%7BD%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?u_%7Bt%7D%253D%5Cleft%20%5B%20v_%7Bt%7D%253Bc_%7Bt%7D%20%5Cright%20%5D%5Ccdot%20W%5E%7Bu%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?c_%7Bt%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?v_%7Bt%7D">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191223170330403.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?o_%7Bt%7D%5E%7BD%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?q%5E%7Br%7D%253Dselu%5Cleft%20(%20o_%7Bt%7D%5E%7BD%7D%5Ccdot%20W%5E%7Bt%7D&amp;plus;b%5E%7Br%7D%20%5Cright%20)">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?q%5E%7BNA%7D%253Dselu%5Cleft%20(%20o_%7Bt%7D%5E%7BD%7D%5Ccdot%20W%5E%7BNA%7D&amp;plus;b%5E%7BNA%7D%20%5Cright%20)">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?p%5E%7Br%7D%253Dsoftmax%5Cleft%20(%20%5Cleft%20%5B%20q%5E%7Br%7D%253Bq%5E%7BNA%7D%20%5Cright%20%5D%20%5Cright%20)">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?p%5E%7Be%7D%253Dsoftmax%5Cleft%20(%20%5Cleft%20%5B%20q%5E%7Be%7D%253Bq%5E%7BNA%7D%20%5Cright%20%5D%20%5Cright%20)">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?q_%7Bi%7D%5E%7Be%7D%253Dselu%5Cleft%20(%20%5Cleft%20%5B%20o_%7Bt%7D%5E%7BD%7D%253Bo_%7Bi%7D%5E%7BE%7D%20%5Cright%20%5D%20%5Ccdot%20W%5E%7Be%7D%20%5Cright%20)">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?M_%7Bi%7D%253D1%252Ci%5Cneq%20k%252CM_%7Bi%7D%253D0%252Ci%253Dk">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?p%5E%7Be%7D%253Dsoftmax%5Cleft%20(%20%5Cleft%20%5B%20M%5Cotimes%20q%5E%7Be%7D%253Bq%5E%7BNA%7D%20%5Cright%20%5D%20%5Cright%20)">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191224103136129.png">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?D_%7Bi%7D">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191224103253460.png">
+<meta property="article:published_time" content="2020-03-04T10:56:01.000Z">
+<meta property="article:modified_time" content="2020-03-04T10:57:45.752Z">
 <meta property="article:author" content="R">
+<meta property="article:tag" content="阅读记录, NLP">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191223154146830.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
   
     <link rel="alternative" href="/atom.xml" title="想吃煎饼果子" type="application/atom+xml">
   
@@ -154,60 +181,212 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-article-4" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/04/article/" class="archive-article-date">
-  	<time datetime="2020-03-04T09:29:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-04</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/04/article/">博客测试</a>
+    <h1 class="article-title" itemprop="name">
+      《Extracting Relational Facts by an End-to-End Neural Model with Copy Mechanism》记录
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2020/03/04/article-4/" class="archive-article-date">
+  	<time datetime="2020-03-04T10:56:01.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-04</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <div id="article_content" class="article_content clearfix">
+            <link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-833878f763.css">
+                            <link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-833878f763.css">
+                <div class="htmledit_views" id="content_views">
+                                            <h1><a name="t0"></a><a name="t0"></a>Abstract</h1>
+
+<p style="text-indent:33px;">句子中的关系事实通常很复杂，不同的关系三元组在句子中存有实体重叠。根据三元组<strong>重叠度</strong>将句子分为三种类型，包括<strong>Normal</strong>，<strong>EntityPairOverlap</strong> 和 <strong>SingleEntiyOverlap</strong>。 现有方法主要集中在Normal类上，无法准确地提取关系三元组。 本文提出了一种<strong>基于具有复制机制的序列到序列学习的端到端模型</strong>，该模型可以从任何这些类的句子中联合提取相关事实。 在解码过程中，采用两种不同的策略：仅使用<strong>一个联合解码器</strong>或应用<strong>多个分离解码器</strong>。</p>
+<h1 style="text-indent:0px;"><a name="t1"></a><a name="t1"></a>Introduction</h1>
+<p style="text-indent:33px;">句子中的关系事实常常很复杂，不同的关系三元组在句子中可能有重叠。如果一个句子的三元组都没有重叠的实体，则该句子属于Normal类；如果一个句子的某些三元组中的某些实体对重叠，则该句子属于EntityPairOverlap（EPO）类；如果一个句子的某些三元组中有一个重叠的实体，而这些三元组中没有重叠的实体对，则该句子属于SingleEntityOverlap（SEO）类。</p>
+<p style="text-align:center;"><img alt="" class="has" height="462" src="https://img-blog.csdnimg.cn/20191223154146830.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="550"></p>
+<p style="text-indent:33px;">为了处理三元组重叠的问题，必须允许一个实体自由地参与多个三元组，对此论文提出一种基于<strong>复制机制</strong>的序列到序列学习的端到端模型，该模型可以从包含这些类别的句子中联合提取相关事实。此模型的主要组件包括两部分：<strong>编码器和解码器</strong>。编码器将自然语言句子（源句子）转换为固定长度的语义向量，然后解码器读入此向量并直接生成三元组。为了生成一个三元组，首先解码器生成关系；其次通过采用复制机制，解码器从源句子复制第一个实体（头实体）；最后解码器从源句子中复制第二个实体（尾实体），以此来提取多个三元组。解码过程中采用两种不同的策略：仅使用一个统一解码器（OneDecoder）生成所有三元组，应用多个分离解码器（MultiDecoder）其每个解码器生成一个三元组。</p>
+<h1 style="text-indent:0px;"><a name="t2"></a><a name="t2"></a>Model</h1>
+<h2><a name="t3"></a><a name="t3"></a>OneDecoder Model</h2>
+<p style="text-align:center;"><img alt="" class="has" height="846" src="https://img-blog.csdnimg.cn/20191223162423231.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="1100"></p>
+<blockquote>
+<p style="text-indent:0;">Figure 2: The overall structure of OneDecoder model. A bi-directional RNN is used to encode the source sentence and then a decoder is used to generate triples directly. The relation is predicted and the entity is copied from source sentence.</p>
+</blockquote>
+
+<p style="text-indent:0;"><strong>Encoder&nbsp; &nbsp;&nbsp;</strong>首先将源句子转换为矩阵，矩阵向量表示各个词嵌入，依序将矩阵传入Bi-RNN生成时间步 t 时刻的结果和隐藏状态。输出结果为&nbsp;<img alt="O^{E}= \left [ o_{1}^{E},\cdots ,o_{n}^{E} \right ],o_{t}^{E}=\left [ \overrightarrow{o_{t}^{E}},\overleftarrow{o_{n-t+1}^{E}} \right ]" class="mathcode" src="https://private.codecogs.com/gif.latex?O%5E%7BE%7D%3D%20%5Cleft%20%5B%20o_%7B1%7D%5E%7BE%7D%2C%5Ccdots%20%2Co_%7Bn%7D%5E%7BE%7D%20%5Cright%20%5D%2Co_%7Bt%7D%5E%7BE%7D%3D%5Cleft%20%5B%20%5Coverrightarrow%7Bo_%7Bt%7D%5E%7BE%7D%7D%2C%5Coverleftarrow%7Bo_%7Bn-t&amp;plus;1%7D%5E%7BE%7D%7D%20%5Cright%20%5D">，隐藏状态的表示类似。</p>
+<p style="text-indent:0;"><strong>Decoder&nbsp;</strong>&nbsp; &nbsp;首先解码器生成三元组的关系，其次解码器从源句子中复制一个实体作为三元组的第一个实体，最后解码器从源句子中复制第二个实体。重复此过程，解码器可以生成多个三元组。当生成所有有效的三元组，解码器将生成NA三元组，即意味着“停止”。NA三元组由NA关系和NA实体对组成。</p>
+<p style="text-align:center;"><img alt="" class="has" height="373" src="https://img-blog.csdnimg.cn/20191223165415874.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="901"></p>
+<blockquote>
+<p style="text-indent:0;">Figure 3: The inputs and outputs of the decoder(s) of OneDecoder model and MultiDecoder model. (a) is the decoder of OneDecoder model. As we can see, only one decoder (the green rectangle with shadows) is used and this encoder is initialized with the sentence representation s. (b) is the decoders of MultiDecoder model. There are two decoders (the green rectangle and blue rectangle with shadows). The ﬁrst decoder is initialized with s;Other decoder(s) are initialized with s and previous decoder’s state.</p>
+</blockquote>
+
+<p style="text-indent:0;">解码计算：<img alt="o_{t}^{D},h_{t}^{D} = g\left ( u_{t}, h_{t-1}^{D} \right )" class="mathcode" src="https://private.codecogs.com/gif.latex?o_%7Bt%7D%5E%7BD%7D%2Ch_%7Bt%7D%5E%7BD%7D%20%3D%20g%5Cleft%20%28%20u_%7Bt%7D%2C%20h_%7Bt-1%7D%5E%7BD%7D%20%5Cright%20%29">，其中&nbsp;<img alt="h_{0}^{D}" class="mathcode" src="https://private.codecogs.com/gif.latex?h_%7B0%7D%5E%7BD%7D">&nbsp;为源句子的初始化表示，<img alt="u_{t}=\left [ v_{t};c_{t} \right ]\cdot W^{u}" class="mathcode" src="https://private.codecogs.com/gif.latex?u_%7Bt%7D%3D%5Cleft%20%5B%20v_%7Bt%7D%3Bc_%7Bt%7D%20%5Cright%20%5D%5Ccdot%20W%5E%7Bu%7D">，<img alt="c_{t}" class="mathcode" src="https://private.codecogs.com/gif.latex?c_%7Bt%7D">&nbsp;是注意力向量，<img alt="v_{t}" class="mathcode" src="https://private.codecogs.com/gif.latex?v_%7Bt%7D">&nbsp;是复制实体或者前一时刻预测关系的嵌入。</p>
+<p style="text-align:center;"><img alt="" class="has" height="259" src="https://img-blog.csdnimg.cn/20191223170330403.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="400"></p>
+<p style="text-indent:33px;">在获得时间步 t 时得解码结果&nbsp;<img alt="o_{t}^{D}" class="mathcode" src="https://private.codecogs.com/gif.latex?o_%7Bt%7D%5E%7BD%7D">&nbsp;后，如果 t 能除以3余1则进行一次关系预测，如果余2则从源句子中复制第一个实体，整除则复制第二个实体。</p>
+<p style="text-indent:0;"><strong>Predict Relation</strong>&nbsp; &nbsp; 假设有m个有效关系，使用一个全连接层来计算所有有效关系的置信向量，<img alt="q^{r}=selu\left ( o_{t}^{D}\cdot W^{t}+b^{r} \right )" class="mathcode" src="https://private.codecogs.com/gif.latex?q%5E%7Br%7D%3Dselu%5Cleft%20%28%20o_%7Bt%7D%5E%7BD%7D%5Ccdot%20W%5E%7Bt%7D&amp;plus;b%5E%7Br%7D%20%5Cright%20%29">。在生成NA三元组时，NA关系的置信值计算为：<img alt="q^{NA}=selu\left ( o_{t}^{D}\cdot W^{NA}+b^{NA} \right )" class="mathcode" src="https://private.codecogs.com/gif.latex?q%5E%7BNA%7D%3Dselu%5Cleft%20%28%20o_%7Bt%7D%5E%7BD%7D%5Ccdot%20W%5E%7BNA%7D&amp;plus;b%5E%7BNA%7D%20%5Cright%20%29">。然后获得概率分布表示：<img alt="p^{r}=softmax\left ( \left [ q^{r};q^{NA} \right ] \right )" class="mathcode" src="https://private.codecogs.com/gif.latex?p%5E%7Br%7D%3Dsoftmax%5Cleft%20%28%20%5Cleft%20%5B%20q%5E%7Br%7D%3Bq%5E%7BNA%7D%20%5Cright%20%5D%20%5Cright%20%29">，选择最高概率的关系并将其嵌入作为下一步的输入。</p>
+<p style="text-indent:0;"><strong>Copy the First Entity</strong>&nbsp; &nbsp; 实体的选择跟关系预测的计算相似，选择概率分布中的最高概率作为预测实体，同样使用其嵌入作为下一步的输入。概率分布表示为：<img alt="p^{e}=softmax\left ( \left [ q^{e};q^{NA} \right ] \right )" class="mathcode" src="https://private.codecogs.com/gif.latex?p%5E%7Be%7D%3Dsoftmax%5Cleft%20%28%20%5Cleft%20%5B%20q%5E%7Be%7D%3Bq%5E%7BNA%7D%20%5Cright%20%5D%20%5Cright%20%29">；置信向量为：<img alt="q_{i}^{e}=selu\left ( \left [ o_{t}^{D};o_{i}^{E} \right ] \cdot W^{e} \right )" class="mathcode" src="https://private.codecogs.com/gif.latex?q_%7Bi%7D%5E%7Be%7D%3Dselu%5Cleft%20%28%20%5Cleft%20%5B%20o_%7Bt%7D%5E%7BD%7D%3Bo_%7Bi%7D%5E%7BE%7D%20%5Cright%20%5D%20%5Ccdot%20W%5E%7Be%7D%20%5Cright%20%29">。</p>
+<p style="text-indent:0;"><strong>Copy the Second Entity</strong>&nbsp; &nbsp; 第二个实体的复制必须避开已复制的第一个实体，对此，假设第一个实体为k-th，引入一个长度为源句子长度n的掩码向量M，<img alt="M_{i}=1,i\neq k,M_{i}=0,i=k" class="mathcode" src="https://private.codecogs.com/gif.latex?M_%7Bi%7D%3D1%2Ci%5Cneq%20k%2CM_%7Bi%7D%3D0%2Ci%3Dk">。然后计算概率分布，<img alt="p^{e}=softmax\left ( \left [ M\otimes q^{e};q^{NA} \right ] \right )" class="mathcode" src="https://private.codecogs.com/gif.latex?p%5E%7Be%7D%3Dsoftmax%5Cleft%20%28%20%5Cleft%20%5B%20M%5Cotimes%20q%5E%7Be%7D%3Bq%5E%7BNA%7D%20%5Cright%20%5D%20%5Cright%20%29">，⊗是逐个元素相乘。</p>
+<h2 style="text-indent:0px;"><a name="t4"></a><a name="t4"></a>MultiDecoder Model</h2>
+<p style="text-indent:33px;">MultiDecoder模型是所提出的OneDecoder模型的扩展。主要区别在于解码三元组时，MultiDecoder模型使用几个分离的解码器进行解码。图3（b）显示了MultiDecoder模型的解码器的输入和输出，有两个解码器（带阴影的绿色和蓝色矩形），解码器按顺序工作：第一个解码器生成第一个三元组，然后第二个解码器生成第二个三元组。</p>
+<p style="text-align:center;"><img alt="" class="has" height="107" src="https://img-blog.csdnimg.cn/20191224103136129.png" width="500"></p>
+<p style="text-indent:0;"><img alt="D_{i}" class="mathcode" src="https://private.codecogs.com/gif.latex?D_%7Bi%7D">&nbsp;表示第 i 个解码器，ut 计算跟之前一样，初始化隐藏状态计算如下：</p>
+<p style="text-align:center;"><img alt="" class="has" height="110" src="https://img-blog.csdnimg.cn/20191224103253460.png" width="400"></p>
+<h2 style="text-indent:0px;"><a name="t5"></a><a name="t5"></a>&nbsp;</h2>
+<p>&nbsp;</p>
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">测试</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">阅读记录, NLP</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2020/03/04/article-4/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2020/03/04/article-5/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          《Chinese Open Relation Extraction and Knowledge Base Establishment》阅读记录
+        
+      </div>
+    </a>
   
   
-    </div></section>
+    <a href="/2020/03/04/article-3/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">《Effective Modeling of Encoder-Decoder Architecturefor Joint Entity and Relation Extraction》</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+  
+  
   
 
-    
+  
+
+  
+
+  
 
 
           </div>
@@ -230,9 +409,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
@@ -300,11 +479,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">测试</a>
+                <a href="javascript:void(0)" class="js-tag color5">论文记录, NLP</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">论文记录, NLP</a>
+                <a href="javascript:void(0)" class="js-tag color5">论文阅读, NLP</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">阅读记录, NLP</a>
               </li>
             
             <div class="clearfix"></div>

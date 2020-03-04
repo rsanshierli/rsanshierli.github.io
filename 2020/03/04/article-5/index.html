@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>《Chinese Open Relation Extraction and Knowledge Base Establishment》阅读记录 | 想吃煎饼果子</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1. Abstract  本文总结了中国语言学中的三种独特但普遍的现象，研究了无监督的基于语言学的中文开放关系提取（ORE），可以自动发现任意关系且无需任何人工标记的数据集。通过将实体关系映射">
+  <meta name="description" content="Abstract​        本文总结了中国语言学中的三种独特但普遍的现象，研究了无监督的基于语言学的中文开放关系提取（ORE），可以自动发现任意关系且无需任何人工标记的数据集。通过将实体关系映射到依存树并考虑独特的中文语言特性，提出一种基于依存语义范式（DSNF）的无监督中文ORE模型。该模型对实体和关系之间的相对位置没有任何限制，并且提取由动词或名词的介导关系并处理平行从句来实现结果。将此">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《Chinese Open Relation Extraction and Knowledge Base Establishment》阅读记录">
 <meta property="og:url" content="http://yoursite.com/2020/03/04/article-5/index.html">
 <meta property="og:site_name" content="想吃煎饼果子">
-<meta property="og:description" content="1. Abstract  本文总结了中国语言学中的三种独特但普遍的现象，研究了无监督的基于语言学的中文开放关系提取（ORE），可以自动发现任意关系且无需任何人工标记的数据集。通过将实体关系映射">
+<meta property="og:description" content="Abstract​        本文总结了中国语言学中的三种独特但普遍的现象，研究了无监督的基于语言学的中文开放关系提取（ORE），可以自动发现任意关系且无需任何人工标记的数据集。通过将实体关系映射到依存树并考虑独特的中文语言特性，提出一种基于依存语义范式（DSNF）的无监督中文ORE模型。该模型对实体和关系之间的相对位置没有任何限制，并且提取由动词或名词的介导关系并处理平行从句来实现结果。将此">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/2019122618253229.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/2019122621391461.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191227203630383.png">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191227203654482.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
 <meta property="article:published_time" content="2020-03-04T10:58:24.000Z">
-<meta property="article:modified_time" content="2020-03-04T10:59:42.913Z">
+<meta property="article:modified_time" content="2020-03-04T12:05:34.868Z">
 <meta property="article:author" content="R">
 <meta property="article:tag" content="论文记录, NLP">
 <meta name="twitter:card" content="summary">
@@ -190,13 +190,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <div id="article_content" class="article_content clearfix">
-            <link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-833878f763.css">
-                            <link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-833878f763.css">
-                <div class="htmledit_views" id="content_views">
-                                            <h1><a name="t0"></a><a name="t0"></a>1. Abstract</h1>
+        <h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>​        本文总结了中国语言学中的三种独特但普遍的现象，研究了无监督的基于语言学的中文开放关系提取（ORE），可以自动发现任意关系且无需任何人工标记的数据集。通过将实体关系映射到依存树并考虑独特的中文语言特性，提出一种基于依存语义范式（DSNF）的无监督中文ORE模型。该模型对实体和关系之间的相对位置没有任何限制，并且提取由动词或名词的介导关系并处理平行从句来实现结果。将此模型应用于网络文本，建立并发布了称为COER的大规模实体和关系知识库。</p>
+<a id="more"></a>
 
-<p style="text-indent:33px;">本文总结了中国语言学中的三种独特但普遍的现象，研究了<strong>无监督</strong>的<strong>基于语言学</strong>的中文开放关系提取（ORE），可以自动发现任意关系且无需任何人工标记的数据集。<strong>通过将实体关系映射到依存树并考虑独特的中文语言特性</strong>，提出一种基于依存语义范式（DSNF）的无监督中文ORE模型。该模型对实体和关系之间的相对位置没有任何限制，并且<strong>提取由动词或名词的介导关系</strong>并处理平行从句来实现结果。将此模型应用于网络文本，建立并发布了称为COER的大规模实体和关系知识库。</p>
 <h1><a name="t1"></a><a name="t1"></a>2. Introduction</h1>
 <p style="text-indent:33px;">中文关系抽取主要基于传统的监督式机器学习算法，与英文的差距主要有两个原因：<strong>一是</strong>缺乏使用神经网络或远程监督来训练模型的大规模标注中文知识语料库；<strong>二是</strong>在<strong>形态、句法和语法</strong>方面，中文比英文更复杂，这使得公开提取更加困难。本文提出一种新颖的无监督中文开放关系提取模型依存语义范式（DSNFs），该模型在充分考虑中文独特语言特性的基础上，可以实现自动从中文文本中提取实体和关系，而无需任何人工干预；并建立一个称为COER的大型实体和关系知识库，可以为深度学习模型提供丰富的训练集，并为远程监督方法提供高质量的数据库。</p>
 <p style="text-indent:33px;"><strong>在相关实体对的上下文中存在规则的句法构造</strong>。例如，如果实体分别是句子的主语和宾语，则关系词将包含谓词动词。依存关系分析可以反映句子组成部分之间的语义修饰，因此<strong>依存关系分析和实体关系之间的映射可用于构造依存语义范式</strong>。</p>
@@ -271,7 +267,6 @@
 <p style="text-indent:33px;">中文有许多解释性和复杂的关系表达式，例如“宣布终止经济和财务制裁”。模型暂不能处理<strong>代词</strong>的干扰。</p>
 <p style="text-align:center;"><img alt="" class="has" height="159" src="https://img-blog.csdnimg.cn/20191227203630383.png" width="500"></p>
 <p style="text-align:center;"><img alt="" class="has" height="194" src="https://img-blog.csdnimg.cn/20191227203654482.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="500"></p>
-
 
       
 

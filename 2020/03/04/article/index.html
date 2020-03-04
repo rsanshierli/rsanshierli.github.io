@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>《Attention Guided Graph Convolutional Networks for Relation Extraction》阅读记录 | 想吃煎饼果子</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="&amp;nbsp;Abstract 依存树传达了丰富的结构信息，事实证明，这些信息对于提取文本中实体之间的关系很有用。然而，如何有效地利用相关信息，同时又从依存树中忽略无关信息仍然是一个具有挑战性的研究问题。现有的采用基于规则的硬修剪策略来选择相关的部分依赖结构的方法不总是产生最佳结果。对此，本文提出 Attention Guided GCN（AGGCN），这是一个直接将完整依存树作为输入的新颖模型。该">
+  <meta name="description" content="Abstract依存树传达了丰富的结构信息，事实证明，这些信息对于提取文本中实体之间的关系很有用。然而，如何有效地利用相关信息，同时又从依存树中忽略无关信息仍然是一个具有挑战性的研究问题。现有的采用基于规则的硬修剪策略来选择相关的部分依赖结构的方法不总是产生最佳结果。对此，本文提出 Attention Guided GCN（AGGCN），这是一个直接将完整依存树作为输入的新颖模型。该模型可以理解为">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《Attention Guided Graph Convolutional Networks for Relation Extraction》阅读记录">
 <meta property="og:url" content="http://yoursite.com/2020/03/04/article/index.html">
 <meta property="og:site_name" content="想吃煎饼果子">
-<meta property="og:description" content="&amp;nbsp;Abstract 依存树传达了丰富的结构信息，事实证明，这些信息对于提取文本中实体之间的关系很有用。然而，如何有效地利用相关信息，同时又从依存树中忽略无关信息仍然是一个具有挑战性的研究问题。现有的采用基于规则的硬修剪策略来选择相关的部分依赖结构的方法不总是产生最佳结果。对此，本文提出 Attention Guided GCN（AGGCN），这是一个直接将完整依存树作为输入的新颖模型。该">
+<meta property="og:description" content="Abstract依存树传达了丰富的结构信息，事实证明，这些信息对于提取文本中实体之间的关系很有用。然而，如何有效地利用相关信息，同时又从依存树中忽略无关信息仍然是一个具有挑战性的研究问题。现有的采用基于规则的硬修剪策略来选择相关的部分依赖结构的方法不总是产生最佳结果。对此，本文提出 Attention Guided GCN（AGGCN），这是一个直接将完整依存树作为输入的新颖模型。该模型可以理解为">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191105212132141.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://private.codecogs.com/gif.latex?A_%7Bij%7D">
@@ -47,7 +47,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191107151215670.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191107151245569.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
 <meta property="article:published_time" content="2020-03-04T10:51:10.000Z">
-<meta property="article:modified_time" content="2020-03-04T10:55:10.007Z">
+<meta property="article:modified_time" content="2020-03-04T11:57:47.907Z">
 <meta property="article:author" content="R">
 <meta property="article:tag" content="论文记录, NLP">
 <meta name="twitter:card" content="summary">
@@ -211,8 +211,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="%C2%A0Abstract"><a name="t1"></a><a name="t1"></a>&nbsp;Abstract</h1>
-<p style="text-indent:33px;">依存树传达了丰富的结构信息，事实证明，这些信息对于提取文本中实体之间的关系很有用。然而，<strong>如何有效地利用相关信息，同时又从依存</strong><strong>树中忽略无关信息仍然是一个具有挑战性的研究问题</strong>。现有的采用基于规则的<strong>硬修剪</strong>策略来选择相关的部分依赖结构的方法不总是产生最佳结果。对此，本文提出 Attention Guided GCN（AGGCN），这是一个直接<strong>将完整依存树作为输入</strong>的新颖模型。该模型可以理解为一种<strong>软修剪</strong>方法，可以<strong>自动学习如何有选择地关注对关系提取任务有用的相关子结构</strong>。在包括交叉句子n元关系提取和大规模句子级关系提取在内的各种任务上的大量结果表明，AGGCN模型能够更好地利用完整依存树的结构信息，比以前的方法具有明显更好的结果。</p>
+        <h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>依存树传达了丰富的结构信息，事实证明，这些信息对于提取文本中实体之间的关系很有用。然而，如何有效地利用相关信息，同时又从依存树中忽略无关信息仍然是一个具有挑战性的研究问题。现有的采用基于规则的硬修剪策略来选择相关的部分依赖结构的方法不总是产生最佳结果。对此，本文提出 Attention Guided GCN（AGGCN），这是一个直接将完整依存树作为输入的新颖模型。该模型可以理解为一种软修剪方法，可以自动学习如何有选择地关注对关系提取任务有用的相关子结构。在包括交叉句子n元关系提取和大规模句子级关系提取在内的各种任务上的大量结果表明，AGGCN模型能够更好地利用完整依存树的结构信息，比以前的方法具有明显更好的结果。</p>
+<a id="more"></a>
+
 <h1><a name="t2"></a><a name="t2"></a>1&nbsp; Introduction</h1>
 <p style="text-indent:33px;">关系提取旨在检测文本中实体之间的关系，在各种自然语言处理应用程序中都有应用，包括生物医学知识发现、知识库填充以及问题解答。图1显示了一个用两个句子表达三个实体L858E，EGFR和 gefitinib 之间的关联敏感度的示例。大多数现有的关系提取模型可以分为两类：基于序列的和基于依赖的。基于序列的模型仅对单词序列起作用，而基于依赖的模型将依存树合并到模型中。与基于序列的模型相比，<strong>基于依存树的模型能够捕获表面看不到的非局部句法关系</strong>，并存在各种修剪策略来提取依赖信息，以进一步提升表现。Xu等人仅在完整树实体之间的最短依赖路径上应用神经网络，Miwa 和 Bansal 将整个树缩减为实体的最低公共祖先（LCA）以下的子树。 Zhang等人在修剪的树上应用图卷积网络（GCN）模型，该树包含与LCA子树中依赖关系路径上相距为K的token。</p>
 <p style="text-indent:33px;">但是，基于规则的修剪策略可能会消除完整树中的一些重要信息。图1显示了跨语句n元关系提取中的一个示例，该示例中如果模型仅考虑修剪的树，则将排除关键token <em>“partial response”</em>。理想情况下，模型应该能够学习如何在完整树中平衡地选择和排除信息。本文提出了Attention Guided GCN（AGGCN），该网络可直接在完整树上运行。直观上看是一种“软修剪”策略，<span style="color:#f33b45;"><strong>将原始依存树转换为完全连接的边加权图</strong></span>。这些权重可以看作是节点之间相关性的强度，<strong>可以通过使用自我注意机制以端到端的方式进行学习</strong>。为了编码一个<strong>更大</strong>的完全连接图，则进行GCN模型的<strong>密集连接</strong>。对于GCN，L层用以捕获距离 L hops的邻居信息。浅层GCN模型可能无法捕获大图中非局部的相互关系。虽然更深的GCN可以捕获图形的更丰富的邻域信息，但从经验上看使用2层模型可以实现最佳性能。借助密集连接能够以较大的深度训练AGGCN模型，从而可以捕获丰富的本地和非本地依赖信息。实验表明，AGGCN模型能够针对各种任务实现更好的性能，对于跨句关系提取任务（多类三元和二元关系提取）该模型在准确性方面比当前的最新模型分别高8％和6％，对于大规模句子级提取任务（TACREDdataset）也优于其他模型，这表明该模型在大型训练集上的有效性。</p>

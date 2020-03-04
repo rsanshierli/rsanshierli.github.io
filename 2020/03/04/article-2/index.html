@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>《Graph Neural Networks with Generated Parameters for Relation Extraction》阅读笔记 | 想吃煎饼果子</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="&amp;nbsp;Abstract 近年来，在机器学习领域，关系推理的改进取得了进展。在现有模型中，图神经网络是多跳关系推理的最有效方法之一。事实上，多跳关系推理在许多自然语言处理任务中是不可缺少的，例如关系抽取。本文通过自然语言语句提出带有生成参数的图神经网络，使图神经网络能够处理非结构化文本输入的关系推理。在一个人工标注数据和两个远程监督数据集上的实验结果表明，与baseline相比，GP-GNN模">
+  <meta name="description" content="Abstract近年来，在机器学习领域，关系推理的改进取得了进展。在现有模型中，图神经网络是多跳关系推理的最有效方法之一。事实上，多跳关系推理在许多自然语言处理任务中是不可缺少的，例如关系抽取。本文通过自然语言语句提出带有生成参数的图神经网络，使图神经网络能够处理非结构化文本输入的关系推理。在一个人工标注数据和两个远程监督数据集上的实验结果表明，与baseline相比，GP-GNN模型取得了显著的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《Graph Neural Networks with Generated Parameters for Relation Extraction》阅读笔记">
 <meta property="og:url" content="http://yoursite.com/2020/03/04/article-2/index.html">
 <meta property="og:site_name" content="想吃煎饼果子">
-<meta property="og:description" content="&amp;nbsp;Abstract 近年来，在机器学习领域，关系推理的改进取得了进展。在现有模型中，图神经网络是多跳关系推理的最有效方法之一。事实上，多跳关系推理在许多自然语言处理任务中是不可缺少的，例如关系抽取。本文通过自然语言语句提出带有生成参数的图神经网络，使图神经网络能够处理非结构化文本输入的关系推理。在一个人工标注数据和两个远程监督数据集上的实验结果表明，与baseline相比，GP-GNN模">
+<meta property="og:description" content="Abstract近年来，在机器学习领域，关系推理的改进取得了进展。在现有模型中，图神经网络是多跳关系推理的最有效方法之一。事实上，多跳关系推理在许多自然语言处理任务中是不可缺少的，例如关系抽取。本文通过自然语言语句提出带有生成参数的图神经网络，使图神经网络能够处理非结构化文本输入的关系推理。在一个人工标注数据和两个远程监督数据集上的实验结果表明，与baseline相比，GP-GNN模型取得了显著的">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191031201957110.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://private.codecogs.com/gif.latex?G%253D%5Cleft%20(%20%5Cnu%252C%5Cvarepsilon%20%5Cright%20)">
@@ -71,7 +71,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191104112450548.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191104152810726.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
 <meta property="article:published_time" content="2020-03-04T10:48:21.000Z">
-<meta property="article:modified_time" content="2020-03-04T10:50:47.327Z">
+<meta property="article:modified_time" content="2020-03-04T11:58:58.615Z">
 <meta property="article:author" content="R">
 <meta property="article:tag" content="论文阅读, NLP">
 <meta name="twitter:card" content="summary">
@@ -235,8 +235,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1><a name="t1"></a><a name="t1"></a>&nbsp;Abstract</h1>
-<p style="text-indent:33px;">近年来，在机器学习领域，关系推理的改进取得了进展。在现有模型中，图神经网络是多跳关系推理的最有效方法之一。事实上，多跳关系推理在许多自然语言处理任务中是不可缺少的，例如关系抽取<span>。</span><span style="color:#f33b45;">本文通过自然语言语句提出带有生成参数的图神经网络</span>，使图神经网络能够处理非结构化文本输入的关系推理。在一个人工标注数据和两个远程监督数据集上的实验结果表明，与baseline相比，GP-GNN模型取得了显著的提升。Case Study 可看到模型可以通过多跳关系推理发现更准确的关系。</p>
+        <h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>近年来，在机器学习领域，关系推理的改进取得了进展。在现有模型中，图神经网络是多跳关系推理的最有效方法之一。事实上，多跳关系推理在许多自然语言处理任务中是不可缺少的，例如关系抽取。本文通过自然语言语句提出带有生成参数的图神经网络，使图神经网络能够处理非结构化文本输入的关系推理。在一个人工标注数据和两个远程监督数据集上的实验结果表明，与baseline相比，GP-GNN模型取得了显著的提升。Case Study 可看到模型可以通过多跳关系推理发现更准确的关系。</p>
+<a id="more"></a>
+
 <h1><a name="t2"></a><a name="t2"></a>1 Introduction</h1>
 <p style="text-indent:33px;">近年来，图神经网络已被应用于机器学习的各个领域，包括节点分类、关系分类、分子性质预测、小样本学习，并在这些任务上取得了优秀的成果，证明了GNNs处理图关系推理的强大能力。<strong>关系推理旨在抽象地推理实体/对象及其关系——给定一个具有m个实体的文本序列，对文本和实体进行推理并预测实体或实体对的类别</strong>。除了图之外，关系推理在许多自然语言处理任务中也很重要，如问答、关系抽取、摘要等。考虑图1所示的例子，现有的关系抽取模型可以很容易地抽取出Luc Besson导演的电影《Leon：The Professional》和这部电影是English的事实，但是如果没有多跳关系推理，就无法推断出Luc Besson和English之间的关系。通过对推理模式的研究，可以发现Luc Besson会说英语，遵循<em>“Luc Besson执导的《Leon：The Professional》这部电影是用English拍摄的，表明Luc Besson会说English” </em>这一推理逻辑。然而，大多数现有的GNNs只能处理<strong>预定义图上</strong>的多跳关系推理，不能直接应用于自然语言关系推理。在自然语言中实现多跳关系推理仍然是一个未解决的问题。</p>
 <p style="text-align:center;"><img alt="" class="has" height="381" src="https://img-blog.csdnimg.cn/20191031201957110.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="950"></p>

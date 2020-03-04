@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>《Extracting Relational Facts by an End-to-End Neural Model with Copy Mechanism》记录 | 想吃煎饼果子</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Abstract  句子中的关系事实通常很复杂，不同的关系三元组在句子中存有实体重叠。根据三元组重叠度将句子分为三种类型，包括Normal，EntityPairOverlap 和 Single">
+  <meta name="description" content="Abstract​       句子中的关系事实通常很复杂，不同的关系三元组在句子中存有实体重叠。根据三元组重叠度将句子分为三种类型，包括Normal，EntityPairOverlap 和 SingleEntiyOverlap。 现有方法主要集中在Normal类上，无法准确地提取关系三元组。 本文提出了一种基于具有复制机制的序列到序列学习的端到端模型，该模型可以从任何这些类的句子中联合提取相关事">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《Extracting Relational Facts by an End-to-End Neural Model with Copy Mechanism》记录">
 <meta property="og:url" content="http://yoursite.com/2020/03/04/article-4/index.html">
 <meta property="og:site_name" content="想吃煎饼果子">
-<meta property="og:description" content="Abstract  句子中的关系事实通常很复杂，不同的关系三元组在句子中存有实体重叠。根据三元组重叠度将句子分为三种类型，包括Normal，EntityPairOverlap 和 Single">
+<meta property="og:description" content="Abstract​       句子中的关系事实通常很复杂，不同的关系三元组在句子中存有实体重叠。根据三元组重叠度将句子分为三种类型，包括Normal，EntityPairOverlap 和 SingleEntiyOverlap。 现有方法主要集中在Normal类上，无法准确地提取关系三元组。 本文提出了一种基于具有复制机制的序列到序列学习的端到端模型，该模型可以从任何这些类的句子中联合提取相关事">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191223154146830.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191223162423231.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
@@ -37,7 +37,7 @@
 <meta property="og:image" content="https://private.codecogs.com/gif.latex?D_%7Bi%7D">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191224103253460.png">
 <meta property="article:published_time" content="2020-03-04T10:56:01.000Z">
-<meta property="article:modified_time" content="2020-03-04T10:57:45.752Z">
+<meta property="article:modified_time" content="2020-03-04T12:00:59.766Z">
 <meta property="article:author" content="R">
 <meta property="article:tag" content="阅读记录, NLP">
 <meta name="twitter:card" content="summary">
@@ -201,13 +201,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <div id="article_content" class="article_content clearfix">
-            <link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-833878f763.css">
-                            <link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-833878f763.css">
-                <div class="htmledit_views" id="content_views">
-                                            <h1><a name="t0"></a><a name="t0"></a>Abstract</h1>
+        <h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>​       句子中的关系事实通常很复杂，不同的关系三元组在句子中存有实体重叠。根据三元组重叠度将句子分为三种类型，包括Normal，EntityPairOverlap 和 SingleEntiyOverlap。 现有方法主要集中在Normal类上，无法准确地提取关系三元组。 本文提出了一种基于具有复制机制的序列到序列学习的端到端模型，该模型可以从任何这些类的句子中联合提取相关事实。 在解码过程中，采用两种不同的策略：仅使用一个联合解码器或应用多个分离解码器。</p>
+<a id="more"></a>
 
-<p style="text-indent:33px;">句子中的关系事实通常很复杂，不同的关系三元组在句子中存有实体重叠。根据三元组<strong>重叠度</strong>将句子分为三种类型，包括<strong>Normal</strong>，<strong>EntityPairOverlap</strong> 和 <strong>SingleEntiyOverlap</strong>。 现有方法主要集中在Normal类上，无法准确地提取关系三元组。 本文提出了一种<strong>基于具有复制机制的序列到序列学习的端到端模型</strong>，该模型可以从任何这些类的句子中联合提取相关事实。 在解码过程中，采用两种不同的策略：仅使用<strong>一个联合解码器</strong>或应用<strong>多个分离解码器</strong>。</p>
 <h1 style="text-indent:0px;"><a name="t1"></a><a name="t1"></a>Introduction</h1>
 <p style="text-indent:33px;">句子中的关系事实常常很复杂，不同的关系三元组在句子中可能有重叠。如果一个句子的三元组都没有重叠的实体，则该句子属于Normal类；如果一个句子的某些三元组中的某些实体对重叠，则该句子属于EntityPairOverlap（EPO）类；如果一个句子的某些三元组中有一个重叠的实体，而这些三元组中没有重叠的实体对，则该句子属于SingleEntityOverlap（SEO）类。</p>
 <p style="text-align:center;"><img alt="" class="has" height="462" src="https://img-blog.csdnimg.cn/20191223154146830.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="550"></p>

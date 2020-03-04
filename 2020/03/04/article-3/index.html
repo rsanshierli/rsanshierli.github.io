@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>《Effective Modeling of Encoder-Decoder Architecturefor Joint Entity and Relation Extraction》 | 想吃煎饼果子</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Abstract  关系元组由两个实体以及它们之间的关系组成，并且经常在非结构化文本中找到这样的元组。文本中可能存在多个关系元组，并且它们之间可能共享一个或两个实体。从句子中提取这样的关系元组">
+  <meta name="description" content="Abstract​       关系元组由两个实体以及它们之间的关系组成，并且经常在非结构化文本中找到这样的元组。文本中可能存在多个关系元组，并且它们之间可能共享一个或两个实体。从句子中提取这样的关系元组是一项艰巨的任务，并且在元组之间共享实体或重叠实体会使其更具挑战性。本文中提出了两种使用编码器-解码器体系结构共同提取实体和关系的方法。提出了一种用于关系元组的表示方案，该方案使解码器能够像机器翻">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《Effective Modeling of Encoder-Decoder Architecturefor Joint Entity and Relation Extraction》">
 <meta property="og:url" content="http://yoursite.com/2020/03/04/article-3/index.html">
 <meta property="og:site_name" content="想吃煎饼果子">
-<meta property="og:description" content="Abstract  关系元组由两个实体以及它们之间的关系组成，并且经常在非结构化文本中找到这样的元组。文本中可能存在多个关系元组，并且它们之间可能共享一个或两个实体。从句子中提取这样的关系元组">
+<meta property="og:description" content="Abstract​       关系元组由两个实体以及它们之间的关系组成，并且经常在非结构化文本中找到这样的元组。文本中可能存在多个关系元组，并且它们之间可能共享一个或两个实体。从句子中提取这样的关系元组是一项艰巨的任务，并且在元组之间共享实体或重叠实体会使其更具挑战性。本文中提出了两种使用编码器-解码器体系结构共同提取实体和关系的方法。提出了一种用于关系元组的表示方案，该方案使解码器能够像机器翻">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191216195622187.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://private.codecogs.com/gif.latex?E_%7B%5Comega%20%7D%5Cin%20%5Cmathbb%7BR%7D%5E%7B%5Cleft%20%7C%20V%20%5Cright%20%7C%5Ctimes%20d_%7B%5Comega%20%7D%7D">
@@ -70,7 +70,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191217164256868.png">
 <meta property="og:image" content="https://private.codecogs.com/gif.latex?v_%7Bt%7D%5E%7Bb%7D">
 <meta property="article:published_time" content="2020-03-04T10:54:04.000Z">
-<meta property="article:modified_time" content="2020-03-04T10:58:14.201Z">
+<meta property="article:modified_time" content="2020-03-04T12:00:10.653Z">
 <meta property="article:author" content="R">
 <meta property="article:tag" content="论文记录, NLP">
 <meta name="twitter:card" content="summary">
@@ -234,13 +234,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <div id="article_content" class="article_content clearfix">
-            <link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-833878f763.css">
-                            <link rel="stylesheet" href="https://csdnimg.cn/release/phoenix/template/css/ck_htmledit_views-833878f763.css">
-                <div class="htmledit_views" id="content_views">
-                                            <h1 id="Abstract"><a name="t0"></a><a name="t0"></a>Abstract</h1>
+        <h1 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h1><p>​       关系元组由两个实体以及它们之间的关系组成，并且经常在非结构化文本中找到这样的元组。文本中可能存在多个关系元组，并且它们之间可能共享一个或两个实体。从句子中提取这样的关系元组是一项艰巨的任务，并且在元组之间共享实体或重叠实体会使其更具挑战性。本文中提出了两种使用编码器-解码器体系结构共同提取实体和关系的方法。提出了一种用于关系元组的表示方案，该方案使解码器能够像机器翻译模型一样一次生成一个单词，并且仍然可以找到句子中存在的所有元组，它们具有不同长度的完整实体名称并且具有重叠的实体。提出一种基于指针网络的解码方法，其中在每个时间步生成一个完整的元组。</p>
+<a id="more"></a>
 
-<p style="text-indent:33px;">关系元组由两个实体以及它们之间的关系组成，并且经常在非结构化文本中找到这样的元组。文本中可能存在多个关系元组，并且它们之间可能共享一个或两个实体。从句子中提取这样的关系元组是一项艰巨的任务，并且在元组之间<strong>共享实体</strong>或<strong>重叠实体</strong>会使其更具挑战性。本文中提出了两种使用<strong>编码器-解码器体系结构</strong>共同提取实体和关系的方法。<strong>提出了一种用于关系元组的表示方案，该方案使解码器能够像机器翻译模型一样一次生成一个单词，并且仍然可以找到句子中存在的所有元组，它们具有不同长度的完整实体名称并且具有重叠的实体。提出一种基于指针网络的解码方法，其中在每个时间步生成一个完整的元组。</strong></p>
 <h1 id="Introduction" style="text-indent:0px;"><a name="t1"></a><a name="t1"></a>Introduction</h1>
 <p style="text-indent:33px;">传统使用流水线方法，使用命名实体识别来识别句子中的实体，然后使用分类器查找它们之间的关系（或没有关系）。但是由于实体检测和关系分类的完全分离，这些模型错过了句子中存在的多个关系元组之间的交互作用。</p>
 <p style="text-indent:33px;">本文三个主要挑战：（i）该模型能够将实体和关系提取在一起。 （ii）能够提取具有重叠实体的多个元组。 （iii）能够准确地提取一个具有全名的元组实体。为了解决这些挑战，提出了两种使用编码器-解码器体系结构的新颖方法。首先提出一种用于关系元组的新表示方案（表1），以便它可以用简单的方式表示具有重叠实体和不同长度实体的多个元组。采用编码器-解码器模型，其中解码器像机器翻译模型一样一次提取一个单词。在序列生成的最后，由于元组的独特表示，可以从单词序列中提取元组。尽管此模型执行得很好，但是一次生成一个单词对于此任务来说有点不自然。每个元组恰好具有两个实体和一个关系，并且每个实体在句子中显示为连续的文本范围。识别它们的最有效方法是在句子中找到它们的开始和结束位置。然后，<strong>使用五个元素来表示每个关系元组：两个实体的开始和结束位置以及它们之间的关系</strong>（请参见表1）。考虑到这一点，<strong>提出了一个基于指针网络的解码框架</strong>。该解码器由两个指针网络和一个识别它们之间关系的分类网络组成，该指针网络可以找到句子中两个实体的开始和结束位置。在解码的每个时间步，此解码器都提取整个关系元组，而不仅仅是单词。</p>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Abstract ​		本文总结了中国语言学中的三种独特但普遍的现象，研究了无监督的基于语言学的中文开放关系提取（ORE），可以自动发现任意关系且无需任何人工标记的数据集。通过将实体关系映射到依存树并考虑独特的中文语言特性，提出一种基于依存语义范式（DSNF）的无监督中文ORE模型。该模型对实体和关系之间的相对位置没有任何限制，并且提取由动词或名词的介导关系并处理平行从句来实现结果。将此模型应用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Chinese Open Relation Extraction and Knowledge Base Establishment》阅读记录">
+<meta property="og:url" content="http://yoursite.com/2020/03/04/article-5/index.html">
+<meta property="og:site_name" content="想吃煎饼果子">
+<meta property="og:description" content="Abstract ​		本文总结了中国语言学中的三种独特但普遍的现象，研究了无监督的基于语言学的中文开放关系提取（ORE），可以自动发现任意关系且无需任何人工标记的数据集。通过将实体关系映射到依存树并考虑独特的中文语言特性，提出一种基于依存语义范式（DSNF）的无监督中文ORE模型。该模型对实体和关系之间的相对位置没有任何限制，并且提取由动词或名词的介导关系并处理平行从句来实现结果。将此模型应用">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019122618253229.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019122621391461.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191227154242982.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191227161253712.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191227195519940.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191227202451331.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191227202758135.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191227203249763.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191227203630383.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191227203654482.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2020-03-04T10:58:24.000Z">
+<meta property="article:modified_time" content="2020-03-04T12:22:49.439Z">
+<meta property="article:author" content="R">
+<meta property="article:tag" content="论文记录">
+<meta property="article:tag" content="NLP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/2019122618253229.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/04/article-5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《Chinese Open Relation Extraction and Knowledge Base Establishment》阅读记录 | 想吃煎饼果子</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">想吃煎饼果子</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">要努力变优秀</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/04/article-5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="R">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="想吃煎饼果子">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《Chinese Open Relation Extraction and Knowledge Base Establishment》阅读记录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-04 18:58:24 / 修改时间：20:22:49" itemprop="dateCreated datePublished" datetime="2020-03-04T18:58:24+08:00">2020-03-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="abstract"><a class="markdownIt-Anchor" href="#abstract"></a> Abstract</h1>
+<p>​		本文总结了中国语言学中的三种独特但普遍的现象，研究了无监督的基于语言学的中文开放关系提取（ORE），可以自动发现任意关系且无需任何人工标记的数据集。通过将实体关系映射到依存树并考虑独特的中文语言特性，提出一种基于依存语义范式（DSNF）的无监督中文ORE模型。该模型对实体和关系之间的相对位置没有任何限制，并且提取由动词或名词的介导关系并处理平行从句来实现结果。将此模型应用于网络文本，建立并发布了称为COER的大规模实体和关系知识库。</p>
+<a id="more"></a>
+<h1><a name="t1"></a><a name="t1"></a>2. Introduction</h1>
+<p style="text-indent:33px;">中文关系抽取主要基于传统的监督式机器学习算法，与英文的差距主要有两个原因：<strong>一是</strong>缺乏使用神经网络或远程监督来训练模型的大规模标注中文知识语料库；<strong>二是</strong>在<strong>形态、句法和语法</strong>方面，中文比英文更复杂，这使得公开提取更加困难。本文提出一种新颖的无监督中文开放关系提取模型依存语义范式（DSNFs），该模型在充分考虑中文独特语言特性的基础上，可以实现自动从中文文本中提取实体和关系，而无需任何人工干预；并建立一个称为COER的大型实体和关系知识库，可以为深度学习模型提供丰富的训练集，并为远程监督方法提供高质量的数据库。</p>
+<p style="text-indent:33px;"><strong>在相关实体对的上下文中存在规则的句法构造</strong>。例如，如果实体分别是句子的主语和宾语，则关系词将包含谓词动词。依存关系分析可以反映句子组成部分之间的语义修饰，因此<strong>依存关系分析和实体关系之间的映射可用于构造依存语义范式</strong>。</p>
+<p style="text-align:center;"><img alt="" class="has" height="298" src="https://img-blog.csdnimg.cn/2019122618253229.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="850"></p>
+<p style="text-indent:33px;">由上图可知，“德国”将“高克”修饰为其属性(att)从而获取三元组(德国，总统，高克)，由SBV、VOB中的指向关系获得三元组(高克，访问，中国)，并且根据并列依存COO(访问，发表)，获得三元组(高克，发表，演讲)。依存关系由LTP提供。</p>
+<p style="text-indent:0;"><strong>主要贡献：</strong></p>
+<ol><li>概括了三种独特但普遍存在的中国语言学现象。</li>
+	<li>提出一种基于依存语义范式（DSNFs）的无监督ORE模型，不限制实体和关系词的相对位置，通过提取动词或名词的介导关系并捕获共现关系三元组来获得结果&nbsp;。</li>
+	<li>建立大规模的中国实体和关系知识库。<a href="https://github.com/TJUNLP/COER" target="_blank" rel="noopener">语料获取</a></li>
+</ol><h1><a name="t2"></a><a name="t2"></a>3. Unique Chinese Linguistic Phenomena</h1>
+<p style="text-indent:33px;">语言学具有普遍性、稳定性和国籍性的独特特征，这将影响提取策略的制定。汉语语言学的复杂性使其难以操作，并且与英语的方法不兼容。汉英语言学的差异主要体现在<strong>形态</strong>和<strong>句法</strong>上。</p>
+<p style="text-indent:0;">形态上的差异如下：</p>
+<ol><li>每个英文单词用空格隔开，中文单词之间没有明显的分界线。</li>
+	<li>英文单词的时态有所不同，但中文单词却没有变化。相同的中文表达可能会充当不同的语义函数，可能会产生歧义，应根据具体情况对此进行判断。</li>
+	<li>英语句子中只有一个谓词头，从句之间有很多连词，中文句子中谓词头可能不是唯一的，多个从属子句可以无需任何连接词进行连接。</li>
+</ol><p style="text-indent:0;">因此，许多通常在英语语料库中表现良好的使用形态特征的方法在中文中可能会取得较差的效果，考虑更深的语言特性并与关系提取相结合以获得适合汉语的模型是本文的核心研究主题之一。</p>
+<p style="text-indent:33px;">定义三种主要的中文语言现象，与英语完全不同，如下：</p>
+<p style="text-indent:33px;"><strong>1. Nominal Modification-Center(NMC) Phenomenon</strong></p>
+<p style="text-indent:33px;">名词修饰中心由修饰语和主词组成，主词是一个常用名词，在句子中通常起主语或宾语的作用。主词通常是短语的主要组成部分，而不是直接作为主语或宾语的实体，当NMC包含一个命名实体作为修饰符时通常会干扰提取，例如“<em>奥巴马</em>总统”、“<em>华盛顿</em>警方”。而英语喜欢直接使用实体作为主词或借助介词，例如&nbsp;“president <em>Obama</em>” “the Police of <em>Washington</em>”。因此将主词定义为伪实体，以便在提取过程中进行相应的转换。例如“奥巴马总统访问中国”，很容易得到伪实体“总统”和实体“中国”之间的“访问”关系，然后可以转换并输出关系元组(奥巴马，访问，中国)。</p>
+<p style="text-indent:33px;"><strong>2. Chinese Light Verb Construction(CLVC) Phenomenon</strong></p>
+<p style="text-indent:33px;">CLVC是指<strong>轻动词</strong>必须与名词共现，动词的宾语以介词宾语的形式出现，介词的位置灵活多变。在语言学中，轻动词几乎没有语义内容，通常以名词构成谓词。在英语中位于轻动词和介词之间的名词短语通常被视为轻动词结构(LVC)。例如短语“is the president of...”和“establish diplomatic relations with...”，其中“is”和“establish”是轻动词。许多文章已经证明，对LVC的不合理处理可能会导致明显的无信息提取。如果仅提取轻动词作为关系词，那么得到的三元组可能是错误的，例如从句子“巴拿马在2017年与中国建立外交关系”中提取(巴拿马，建立，中国)。英语提取器REVERB通过语法约束解决了这个问题：轻言语短语必须是“verb-noun-preposition”的连续单词序列。</p>
+<p style="text-indent:33px;">英语中LVC的单词序列与中文完全不同，因此REVERB中的句法约束不能直接传递给中文提取。例如在“Faust made a deal with the devil”中，“made a deal with”是一个LVC，谓词也是如此，提取结果是(Faust, made a deal with, the devil)。将句子翻译成中文如下图所示，“verb-noun-preposition”的序列将不再保留，因为介词的位置在CLVC中更加灵活。</p>
+<p style="text-align:center;"><img alt="" class="has" height="403" src="https://img-blog.csdnimg.cn/2019122621391461.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="800"></p>
+<p style="text-indent:33px;">论文采用依存结构来解决CLVC在关系提取过程中的问题，发现依存分析可以很好地表示CLVC的定律。无论介词在句子中的位置如何，介词和实体都会组合成状语短语并出现在依存句法分析中。介词取决于ADV的动词，并且有一个实体对象取决于POB的介词，同时名词以VOB作为直接宾语紧跟轻动词以补充动词的语义内容。 如果上述结构在依存树中匹配，那么可以准确地提取CLVC短语作为关系。为了消除不连贯或无意义的提取，将动词及其直接宾语的组合标识为关系表达式（介词除外）。</p>
+<p style="text-indent:33px;">此外，及物性概念动词可以单独用作谓语，也可以与名词（直接宾语）结合使用，并具有介词短语作为修饰动词的副词修饰语。尽管概念动词在语义上是独立的，但是只有谓词和名词的组合才能表达完整的文本语义，将此现象定义为扩展CLVC。</p>
+<p style="text-indent:0;">&nbsp;</p>
+<p style="text-indent:33px;"><strong>3. Intransitive Verb（IV）Phenomenon</strong></p>
+<p style="text-indent:33px;">IV表示不及物动词必须通过介词链接到其修饰词，介词可以在动词的左侧或右侧。根据动词是否可以直接与宾语搭配，将动词分为两类：及物动词和不及物动词，宾语不能直接跟随不及物动词。在英语中，必须在不及物动词和宾语之间添加介词，例如“born in”，“work at”和“apologize to”。REVERB通过语法约束来解决该问题：关系短语必须是句子中单词的连续序列，以动词开头，以介词结尾。例子，“Hudson born in Hampstead, which is a suburb of London”，可以提取关系短语“born in ”。翻译成中文：</p>
+<p style="text-align:center;"><img alt="" class="has" height="390" src="https://img-blog.csdnimg.cn/20191227154242982.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="850"></p>
+<p style="text-indent:33px;">与处理CLVC的原则一致，依存分析有助于探索IV，而无需担心介词位置的影响。当介词位于动词的左侧时，介词取决于ADV的动词，并且有一个实体作为宾语取决于POB的介词。 否则通过位于动词的右侧，介词取决于CMP的动词，而实体取决于POB的介词。如果上述结构在依存树中匹配，则可准确提取IV短语作为关系。IV不同于CLVC，它们具有不同的语言意义，尽管它们都需要介词来构造句子，并且在实际提取过程中可以类似地对待，但是具有显式语义的不及物动词与轻度动词是有区别的。</p>
+<h1><a name="t3"></a><a name="t3"></a>4. DEPENDENCY SEMANTIC NORMAL FORMS&nbsp;</h1>
+<p style="text-indent:33px;">依存树对于关系提取非常有用，比面向表面的表示更紧凑地捕获关系短语的句法和语义属性。由于实体对必须以依存短语的形式出现在依存树中，因此实体之间的依存路径将反映成对的对应关系。包含用于关系提取的表征语法类型很多，例如主语-谓语，谓语-宾语，介词-宾语，协同，修饰语和其他结构。通过将它们映射到依存 树中得到依存语义范式(DSNF)。DSNF是关系的句法和语义抽象，可以概括为单词、POS标签、依存路径和路径上依存标签的组合。定义了两种显示DSNF的方法：一是逻辑表达式，二是图形表达式。将句法结构分四类：<strong>修饰结构(MOD)、动词结构(VERB)、并列结构(COOR)和公式化结构(FORM)</strong>，可以在每种类型中获得一个或多个DSNF。</p>
+<p style="text-align:center;"><img alt="" class="has" height="1047" src="https://img-blog.csdnimg.cn/20191227161253712.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="776"></p>
+<h2><a name="t4"></a><a name="t4"></a><strong>4.1 Modified Construction</strong></h2>
+<p style="text-indent:33px;"><strong>修饰结构(MOD)：</strong>关系词是实体对上下文中的修饰语成分，其中主词是实体，修饰语称为修饰定语。中文中修饰语结构属于定语结构。修饰语的成分类型非常广泛，包括<strong>专有名词(实体)</strong>、<strong>普通名词</strong>、<strong>含“的”短语</strong>以及<strong>数字</strong>等。定语和主语之间的标签通常是<strong>ATT</strong>或<strong>RAD</strong>。例子如(德国，总统，高克)。另外修饰语可能是多层次的，<strong>一个主词可以具有多个定语</strong>。在实际提取中一个关系词主要考虑存在两个或三个定语并且几个修饰语组合的情况。根据MOD定义的DSNF1如图5所示。</p>
+<h2><a name="t5"></a><a name="t5"></a><strong>4.2&nbsp;Verbal Construction</strong></h2>
+<p style="text-indent:33px;"><strong>动词结构(VERB)：</strong>动词充当谓语短语并且可能是关系词。对于一个实体对，一是谓词主语另一在宾语的位置，它可以直接与动词(Verb-Object)关联，也可以与介词(Preposition-Object)间接关联。根据动词的多样化，关系可以分为以下几类：</p>
+<p style="text-indent:33px;"><strong>Transitive Verbal Relations(及物动词关系)&nbsp;&nbsp;</strong>两个实体(作为句子的主语或宾语)都依赖于SBV或VOB标签的开头谓词，例如(高克，访问，中国)。有时及物动词后面没有动词宾语，则介词宾语短语会修饰动词，并且该短语通常在谓词的前面。</p>
+<p style="text-indent:33px;"><strong>CLVC or Extended CLVC Relations(轻动词关系)&nbsp;&nbsp;</strong>例如在句子“主席对埃及进行国事访问”中“对...进行国事访问”是汉语轻动词的结构。主语“主席”直接取决于SBV的轻动词“进行”；“埃及”间接依赖于POB的轻动词作为介词宾语，则可提取三元组(主席，进行国事访问，埃及)。可以使用DSNF3处理CLVC，在特殊情况下，如果介词呈现被动语态(由或者被)，则应交换实体的位置以确保三元组的逻辑语义。</p>
+<p style="text-indent:33px;"><strong>IVC Relations&nbsp;&nbsp;</strong>当介词位于不及物动词的左侧时，利用DSNF3提取三元组，但<strong>仅将谓语</strong>用作关系词。当介词位于动词右边时，定义DSNF4以获得关系。</p>
+<h2><a name="t6"></a><a name="t6"></a><strong>4.3&nbsp;Coordination Construction</strong></h2>
+<p style="text-indent:33px;"><strong>并列结构(COOR)：</strong>关系宾语或并列动作可能构成COOR，在提取过程中主要考虑因素是那些并列实体或动词。对于并列实体E1和E2，所有涉及E1的三元组都适用于E2。即E2可以代替三元组中的E1以获取新的三元组。<strong>逗号或连词</strong>通常用于连接并列实体。描述几种不同动作的并列动词是由同一实体执行的，这些动词通常分布在句子的并列从句中。例如例子1中的“访问”和“发表”。另外COOR必须包含在其他语法类别中，比如通过动词结构提取三元组。DSNF5、DSNF6和DSNF7仅处理COOR依赖于<strong>及物动词结构</strong>的情况。此外并列名词或并列动词可能在同一句子中同时出现并且不会相互排斥。</p>
+<h2><a name="t7"></a><a name="t7"></a><strong>4.4 Formulaic Construction 公式化结构(FORM)</strong></h2>
+<h2><a name="t8"></a><a name="t8"></a><strong>4.5&nbsp;Constraints for DSNFs</strong></h2>
+<p style="text-indent:33px;">为了尽可能避免因依存关系分析错误而导致的级联效应，对DSNF约束如下：</p>
+<ol><li>通常为了保持语义完整性，提取过程以句子完成。文本使用标点符号细分为句子，包括句号、感叹号、分号、分号和问号。当句子的长度大于阈值M时，该句子将进一步用逗号分解，并对子句进行提取。</li>
+	<li>保持句子的单词顺序，实体对之间的其他实体数不能超过X1，实体对之间的其他任何单词数都必须小于X2。</li>
+	<li>为了避免在DSNFs匹配期间主语错误地依赖谓词，如果E1依赖SBV的谓词，则E1和谓词（代词除外）之间不应有其他词同时依赖SBV的谓词 。</li>
+	<li>对于DSNF1，句子中E1和E2之间的距离不应超过4。</li>
+	<li>对于DSNF3，当单词是取决于VOB谓词的直接宾语时，该单词必须是名词。</li>
+	<li>对于DSNF3，当谓词前面有多个副词短语时，DSNF3只能匹配最接近谓词的短语。状语短语由介词和实体组成，它出现在依存关系分析中。介词取决于ADV的动词，而实体宾语取决于POB的介词。</li>
+	<li>通过特定于语言的调整，名词可以分为两种类型：一是与职业有关的名词，例如“主席、教授、警察”；二是朴素名词。由于与职业有关的名词是一个封闭的集合，可通过从词典中进行选择来检测名词的类型。如果实体是NMC结构的一部分，并且单词的名称是朴素名词，则通过连接朴素名词来扩展实体，例如“纽约警察”。</li>
+</ol><h1><a name="t9"></a><a name="t9"></a>5.&nbsp;COER: CHINESE OPEN ENTITY AND RELATION KNOWLEDGE BASE</h1>
+<p style="text-indent:33px;">COER是一个可扩展的实体和关系语料库，包含大约一百万个关系三元组，其中关系是开放和任意的。当前大约有556,012个命名实体和282,347个开放关系短语，包含军事，体育，娱乐，经济学和其他领域，可确保此数据库的开放性。提取的三元组存储在一系列XML文件中，关系项目由原始文本、实体对、关系短语和最短依赖路径组成。每个Entity_pair单元均包含两个参数条目，每个Relation_phrase单元均包含多个提及条目。同时条目包含丰富的属性，内容组织结构用树表示：</p>
+<p style="text-align:center;"><img alt="" class="has" height="523" src="https://img-blog.csdnimg.cn/20191227195519940.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="700"></p>
+<h1><a name="t10"></a><a name="t10"></a>6. EXPERIMENTS</h1>
+<h2><a name="t11"></a><a name="t11"></a>6.1 Experimental Setup</h2>
+<ol><li><strong>预处理输入文本&nbsp;&nbsp;</strong>首先使用阈值M = 40将文本拆分为句子，借助LTP的NLP工具对每个目标句子进行预处理，包括分词、POS标记和依赖项解析。</li>
+	<li><strong>选择候选实体&nbsp;&nbsp;</strong>根据LTP和迭代启发式算法通过命名实体识别方法检测所有候选实体，后者将名词与相邻名词合并来组合最大名词短语。这些名词只能具有{ni，nh，ns，nz，j}列表中的相同POS，其分别表示组织名称、人员名称、地理名称、其他专有名词和缩写含义。启发式是对前者的补充。</li>
+	<li><strong>匹配DSNF&nbsp;</strong> 分别阈值X1和X2设置为3和12。对于同一句子中的每对候选实体，可以自动确定最短路径中共享的句法结构是否正确匹配到某个DSNF。</li>
+	<li><strong>根据匹配结果输出三元组</strong></li>
+</ol><p style="text-indent:33px;">结果验证：</p>
+<p style="text-align:center;"><img alt="" class="has" height="188" src="https://img-blog.csdnimg.cn/20191227202451331.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="800"></p>
+<h2><a name="t12"></a><a name="t12"></a>6.2 Experimental Results</h2>
+<p style="text-align:center;"><img alt="" class="has" height="145" src="https://img-blog.csdnimg.cn/20191227202758135.png" width="653"></p>
+<p style="text-align:center;"><img alt="" class="has" height="335" src="https://img-blog.csdnimg.cn/20191227203249763.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="500"></p>
+<h2><a name="t13"></a><a name="t13"></a>6.3 Error Analysis</h2>
+<p style="text-indent:33px;">中文有许多解释性和复杂的关系表达式，例如“宣布终止经济和财务制裁”。模型暂不能处理<strong>代词</strong>的干扰。</p>
+<p style="text-align:center;"><img alt="" class="has" height="159" src="https://img-blog.csdnimg.cn/20191227203630383.png" width="500"></p>
+<p style="text-align:center;"><img alt="" class="has" height="194" src="https://img-blog.csdnimg.cn/20191227203654482.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="500"></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95/" rel="tag"># 论文记录</a>
+              <a href="/tags/NLP/" rel="tag"># NLP</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/04/article-4/" rel="prev" title="《Extracting Relational Facts by an End-to-End Neural Model with Copy Mechanism》记录">
+      <i class="fa fa-chevron-left"></i> 《Extracting Relational Facts by an End-to-End Neural Model with Copy Mechanism》记录
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#abstract"><span class="nav-number">1.</span> <span class="nav-text"> Abstract</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">2. Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">3. Unique Chinese Linguistic Phenomena</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">4. DEPENDENCY SEMANTIC NORMAL FORMS&amp;nbsp;</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 Modified Construction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">4.2.</span> <span class="nav-text">4.2&amp;nbsp;Verbal Construction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">4.3.</span> <span class="nav-text">4.3&amp;nbsp;Coordination Construction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 Formulaic Construction 公式化结构(FORM)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">4.5.</span> <span class="nav-text">4.5&amp;nbsp;Constraints for DSNFs</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">5.</span> <span class="nav-text">5.&amp;nbsp;COER: CHINESE OPEN ENTITY AND RELATION KNOWLEDGE BASE</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">6.</span> <span class="nav-text">6. EXPERIMENTS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">6.1.</span> <span class="nav-text">6.1 Experimental Setup</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">6.2.</span> <span class="nav-text">6.2 Experimental Results</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">6.3.</span> <span class="nav-text">6.3 Error Analysis</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">R</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">R</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

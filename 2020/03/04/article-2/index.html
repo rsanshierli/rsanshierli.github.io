@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="Abstract 近年来，在机器学习领域，关系推理的改进取得了进展。在现有模型中，图神经网络是多跳关系推理的最有效方法之一。事实上，多跳关系推理在许多自然语言处理任务中是不可缺少的，例如关系抽取。本文通过自然语言语句提出带有生成参数的图神经网络，使图神经网络能够处理非结构化文本输入的关系推理。在一个人工标注数据和两个远程监督数据集上的实验结果表明，与baseline相比，GP-GNN模型取得了显">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Graph Neural Networks with Generated Parameters for Relation Extraction》阅读笔记">
+<meta property="og:url" content="http://yoursite.com/2020/03/04/article-2/index.html">
+<meta property="og:site_name" content="想吃煎饼果子">
+<meta property="og:description" content="Abstract 近年来，在机器学习领域，关系推理的改进取得了进展。在现有模型中，图神经网络是多跳关系推理的最有效方法之一。事实上，多跳关系推理在许多自然语言处理任务中是不可缺少的，例如关系抽取。本文通过自然语言语句提出带有生成参数的图神经网络，使图神经网络能够处理非结构化文本输入的关系推理。在一个人工标注数据和两个远程监督数据集上的实验结果表明，与baseline相比，GP-GNN模型取得了显">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191031201957110.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?G%253D%5Cleft%20(%20%5Cnu%252C%5Cvarepsilon%20%5Cright%20)">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?%5Cleft%20(%20%5Cnu%20_%7Bi%7D%252C%5Cnu%20_%7Bj%7D%20%5Cright%20)%5Cin%20%5Cvarepsilon">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?%5Cnu%20_%7Bi%7D%252C%5Cnu%20_%7Bj%7D%5Cin%20%5Cnu">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?s%253D%20x_%7B0%7D%5E%7Bi%252Cj%7D%252Cx_%7B1%7D%5E%7Bi%252Cj%7D%252C%5Ccdots%20%252Cx_%7Bl-1%7D%5E%7Bi%252Cj%7D">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191101111536455.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?f%5Cleft%20(%20%5Ccdot%20%5Cright%20)">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?E%5Cleft%20(%20%5Ccdot%20%5Cright%20)">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?%5Ctheta%20_%7Be%7D%5E%7Bn%7D">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191101160432734.png">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?N%5Cleft%20(%20%5Cnu%20_%7Bi%7D%20%5Cright%20)">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?%5Csigma%20%5Cleft%20(%20%5Ccdot%20%5Cright%20)">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191102163404369.png">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?%5Ctheta%20_%7Bc%7D">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191102163607480.png">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?s%253D%5Cleft%20(%20x_%7B0%7D%252Cx_%7B1%7D%252C%5Ccdots%20%252Cx_%7Bl-1%7D%20%5Cright%20)">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?%5Cnu%20_%7Bs%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?%5Cnu%20_%7Bi%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?%5Cleft%20(%20v_%7Bi%7D%252Cv_%7Bj%7D%20%5Cright%20)">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?r_%7Bv_%7Bi%7D%252Cv_%7Bj%7D%7D%5Cin%20R">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?E%5Cleft%20(%20x_%7Bt%7D%5E%7Bi%252Cj%7D%20%5Cright%20)%253D%20%5Cleft%20%5B%20x_%7Bt%7D%253Bp_%7Bt%7D%5E%7Bi%252Cj%7D%20%5Cright%20%5D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?x_%7Bt%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?x_%7Bt%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?p_%7Bt%7D%5E%7Bi%252Cj%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?f%5Cleft%20(%20%5Ccdot%20%5Cright%20)">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?%5Cleft%20%5B%20%5Ccdot%20%5Cright%20%5D">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191102172028925.png">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?W_%7Be%7D%5Cin%20%5Cmathbb%7BR%7D%5E%7B%5Cleft%20%7C%20V%20%5Cright%20%7C%5Ctimes%20d_%7Bw%7D%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?x_%7Bt%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?x_%7Bt%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?%5Cnu%20_%7Bi%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?%5Cnu%20_%7Bj%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?P%5Cin%20%5Cmathbb%7BR%7D%5E%7B3%5Ctimes%20d_%7Bp%7D%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?d_%7Bp%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?p_%7Bt%7D%5E%7Bi%252Cj%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?x_%7Bt%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?%5Cleft%20(%20v_%7Bi%7D%252Cv_%7Bj%7D%20%5Cright%20)">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?%5Cnu%20_%7Bi%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?%5Cnu%20_%7Bj%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?h_%7B%5Cnu%20_%7Bi%7D%7D%5E%7B%5Cleft%20(%200%20%5Cright%20)%7D%253D%20a_%7Bsubject%7D%252Ch_%7B%5Cnu%20j%7D%5E%7B%5Cleft%20(%200%20%5Cright%20)%7D%253D%20a_%7Bobject%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?a_%7Bsubject%7D%252Ca_%7Bobject%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?a_%7Bsubject%7D%253D%20%5Cleft%20%5B%201%253B0%20%5Cright%20%5D%5E%7BT%7D%252Ca_%7Bobject%7D%253D%5Cleft%20%5B%200%253B1%20%5Cright%20%5D%5E%7BT%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?%5Cleft%20(%20v_%7Bi%7D%252Cv_%7Bj%7D%20%5Cright%20)">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?%5Codot">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?r_%7B%5Cnu%20_%7Bi%252C%5Cupsilon%20_%7Bj%7D%7D%7D%5Cin%20R">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?r_%7B%5Cnu%20_%7Bi%252C%5Cupsilon%20_%7Bj%7D%7D%7D">
+<meta property="og:image" content="https://private.codecogs.com/gif.latex?%5Cleft%20(%20v_%7Bi%7D%252Cv_%7Bj%7D%20%5Cright%20)">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/2019110316372496.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191103163736856.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191103163746275.png">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191104095705561.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191104110908402.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191104110939624.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191104112450548.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20191104152810726.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2020-03-04T10:48:21.000Z">
+<meta property="article:modified_time" content="2020-03-04T12:23:05.701Z">
+<meta property="article:author" content="R">
+<meta property="article:tag" content="论文记录">
+<meta property="article:tag" content="NLP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20191031201957110.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
+
+<link rel="canonical" href="http://yoursite.com/2020/03/04/article-2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true
+  };
+</script>
+
+  <title>《Graph Neural Networks with Generated Parameters for Relation Extraction》阅读笔记 | 想吃煎饼果子</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">想吃煎饼果子</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">要努力变优秀</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/04/article-2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="R">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="想吃煎饼果子">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《Graph Neural Networks with Generated Parameters for Relation Extraction》阅读笔记
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-04 18:48:21 / 修改时间：20:23:05" itemprop="dateCreated datePublished" datetime="2020-03-04T18:48:21+08:00">2020-03-04</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="abstract"><a class="markdownIt-Anchor" href="#abstract"></a> Abstract</h1>
+<p>近年来，在机器学习领域，关系推理的改进取得了进展。在现有模型中，图神经网络是多跳关系推理的最有效方法之一。事实上，多跳关系推理在许多自然语言处理任务中是不可缺少的，例如关系抽取。本文通过自然语言语句提出带有生成参数的图神经网络，使图神经网络能够处理非结构化文本输入的关系推理。在一个人工标注数据和两个远程监督数据集上的实验结果表明，与baseline相比，GP-GNN模型取得了显著的提升。Case Study 可看到模型可以通过多跳关系推理发现更准确的关系。</p>
+<a id="more"></a>
+<h1><a name="t2"></a><a name="t2"></a>1 Introduction</h1>
+<p style="text-indent:33px;">近年来，图神经网络已被应用于机器学习的各个领域，包括节点分类、关系分类、分子性质预测、小样本学习，并在这些任务上取得了优秀的成果，证明了GNNs处理图关系推理的强大能力。<strong>关系推理旨在抽象地推理实体/对象及其关系——给定一个具有m个实体的文本序列，对文本和实体进行推理并预测实体或实体对的类别</strong>。除了图之外，关系推理在许多自然语言处理任务中也很重要，如问答、关系抽取、摘要等。考虑图1所示的例子，现有的关系抽取模型可以很容易地抽取出Luc Besson导演的电影《Leon：The Professional》和这部电影是English的事实，但是如果没有多跳关系推理，就无法推断出Luc Besson和English之间的关系。通过对推理模式的研究，可以发现Luc Besson会说英语，遵循<em>“Luc Besson执导的《Leon：The Professional》这部电影是用English拍摄的，表明Luc Besson会说English” </em>这一推理逻辑。然而，大多数现有的GNNs只能处理<strong>预定义图上</strong>的多跳关系推理，不能直接应用于自然语言关系推理。在自然语言中实现多跳关系推理仍然是一个未解决的问题。</p>
+<p style="text-align:center;"><img alt="" class="has" height="381" src="https://img-blog.csdnimg.cn/20191031201957110.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="950"></p>
+<blockquote>
+<p style="text-indent:0;">给定一个带有多个实体的句子，<strong>通过生成图神经网络的权重来对这些实体之间的关系进行建模。</strong>对“L'eon”和“英语”以及“Luc Besson”之间关系的建模有助于发现“Luc Besson”和“English”之间的关系。</p>
+</blockquote>
+<p style="text-indent:33px;">为了解决这个问题，本文提出了<strong>带有生成参数（GP-GNN）的图神经网络</strong>，以适应GNN来解决自然语言关系推理任务。 GP-GNN首先<strong>用文本序列中的实体构造一个全连接图</strong>，&nbsp;之后使用三个模块来处理关系推理：（1）<strong>使边能够对自然语言中的丰富信息进行编码的编码模块</strong>；（2）<strong>在各个节点之间传播关系信息的传播模块</strong>；（3）<strong>使用节点表示进行预测的分类模块</strong>。 与传统的GNN相比，<strong>GP-GNN可以从自然语言中学习边的参数，将其范围从仅对非关系图或边类型数量有限的图进行推断扩展到文本等非结构化输入。</strong>实验中将GP-GNNs应用于一个经典的自然语言关系推理任务：从文本中提取关系。在维基百科语料库中进行了与维基数据库知识库相结合的实验，建立了一个人工标注测试集和两个具有不同密集度的远距标注测试集。实验结果表明，通过考虑多跳关系推理，该模型在关系抽取任务上优于其他模型。定性分析结果表明，与基模型相比，该模型通过推理可以发现更多的关系。</p>
+<p style="text-indent:33px;"><strong>主要贡献：</strong></p>
+<p style="text-indent:33px;">1）提出了一个新的带有生成参数的图神经网络模型，实现了带有丰富文本信息的关系消息传递，可以应用于处理非结构化输入(如自然语言)的关系推理。</p>
+<p style="text-indent:33px;">2）在文本关系抽取任务中验证了GP-GNNs与抽取关系模型的对比，证明了其多跳关系推理能力。</p>
+<h1 style="text-indent:0px;"><a name="t3"></a><a name="t3"></a>2&nbsp; Related Work</h1>
+<h1><a name="t4"></a><a name="t4"></a>3&nbsp; GP-GNNs</h1>
+<p style="text-indent:33px;">GP-GNN首先<strong>建立完全连通图</strong><img alt="G=\left ( \nu,\varepsilon \right )" class="mathcode" src="https://private.codecogs.com/gif.latex?G%3D%5Cleft%20%28%20%5Cnu%2C%5Cvarepsilon%20%5Cright%20%29">，其中V是实体的集合，每个边<img alt="\left ( \nu _{i},\nu _{j} \right )\in \varepsilon" class="mathcode" src="https://private.codecogs.com/gif.latex?%5Cleft%20%28%20%5Cnu%20_%7Bi%7D%2C%5Cnu%20_%7Bj%7D%20%5Cright%20%29%5Cin%20%5Cvarepsilon">，<img alt="\nu _{i},\nu _{j}\in \nu" class="mathcode" src="https://private.codecogs.com/gif.latex?%5Cnu%20_%7Bi%7D%2C%5Cnu%20_%7Bj%7D%5Cin%20%5Cnu">对应于从文本中提取的序列<img alt="s= x_{0}^{i,j},x_{1}^{i,j},\cdots ,x_{l-1}^{i,j}" class="mathcode" src="https://private.codecogs.com/gif.latex?s%3D%20x_%7B0%7D%5E%7Bi%2Cj%7D%2Cx_%7B1%7D%5E%7Bi%2Cj%7D%2C%5Ccdots%20%2Cx_%7Bl-1%7D%5E%7Bi%2Cj%7D">。之后GP-GNN采用三个模块进行关系推理，包括<strong>编码模块、传播模块和分类模块</strong>，如图2所示。</p>
+<p style="text-align:center;"><img alt="" class="has" height="382" src="https://img-blog.csdnimg.cn/20191101111536455.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="950"></p>
+<p style="text-indent:0;">总体架构：编码模块将一系列向量表示作为输入，并输出一个转移矩阵； 传播模块利用生成的转移矩阵将隐藏状态从节点传播到其邻居。分类模块根据节点表示提供与任务相关的预测。</p>
+<h2 style="text-indent:0px;"><a name="t5"></a><a name="t5"></a>3.1&nbsp; Encoding Module</h2>
+<p style="text-indent:33px;"><strong>编码模块将序列转换为边相关的转移矩阵</strong>，即传播模块的参数，通过以下公式。其中<img alt="f\left ( \cdot \right )" class="mathcode" src="https://private.codecogs.com/gif.latex?f%5Cleft%20%28%20%5Ccdot%20%5Cright%20%29">&nbsp;是可以对序列数据进行编码的任何模型，例如LSTM、GRU、CNN，<img alt="E\left ( \cdot \right )" class="mathcode" src="https://private.codecogs.com/gif.latex?E%5Cleft%20%28%20%5Ccdot%20%5Cright%20%29">&nbsp;表示嵌入函数，<img alt="\theta _{e}^{n}" class="mathcode" src="https://private.codecogs.com/gif.latex?%5Ctheta%20_%7Be%7D%5E%7Bn%7D">&nbsp;表示第n层编码模块的参数。</p>
+<p style="text-align:center;"><img alt="" class="has" height="79" src="https://img-blog.csdnimg.cn/20191101160432734.png" width="500"></p>
+<h2 style="text-indent:0px;"><a name="t6"></a><a name="t6"></a>3.2&nbsp; Propagation Module</h2>
+<p style="text-indent:33px;"><strong>传播模块逐层学习节点的表示形式</strong>，节点的初始嵌入（即第0层的表示）与任务相关，可以是对节点特征进行编码的嵌入，也可以是one-hot编码嵌入。给定层n的表示形式，<strong>n +1 层</strong>的表示形式通过下面公式计算，其中&nbsp;<img alt="N\left ( \nu _{i} \right )" class="mathcode" src="https://private.codecogs.com/gif.latex?N%5Cleft%20%28%20%5Cnu%20_%7Bi%7D%20%5Cright%20%29">&nbsp;表示图G中节点v的邻域，<img alt="\sigma \left ( \cdot \right )" class="mathcode" src="https://private.codecogs.com/gif.latex?%5Csigma%20%5Cleft%20%28%20%5Ccdot%20%5Cright%20%29">&nbsp;表示非线性激活函数。</p>
+<p style="text-align:center;"><img alt="" class="has" height="74" src="https://img-blog.csdnimg.cn/20191102163404369.png" width="400"></p>
+<h2 style="text-indent:0px;"><a name="t7"></a><a name="t7"></a>3.3&nbsp; Classification Module</h2>
+<p style="text-indent:33px;">分类模块将节点表示作为输入和输出预测，GP-GNN的<strong>损失公式</strong>则为（3），其中&nbsp;<img alt="\theta _{c}" class="mathcode" src="https://private.codecogs.com/gif.latex?%5Ctheta%20_%7Bc%7D">&nbsp;表示分类模块的参数，K表示传播模块的层数，Y表示真实标签，通过梯度下降方法训练。</p>
+<p style="text-align:center;"><img alt="" class="has" height="79" src="https://img-blog.csdnimg.cn/20191102163607480.png" width="500"></p>
+<h1 style="text-indent:0px;"><a name="t8"></a><a name="t8"></a>4&nbsp; Relation Extraction with GP-GNNs</h1>
+<p style="text-indent:33px;">从文本中提取关系是经典的自然语言关系推理任务。 给定句子<img alt="s=\left ( x_{0},x_{1},\cdots ,x_{l-1} \right )" class="mathcode" src="https://private.codecogs.com/gif.latex?s%3D%5Cleft%20%28%20x_%7B0%7D%2Cx_%7B1%7D%2C%5Ccdots%20%2Cx_%7Bl-1%7D%20%5Cright%20%29">，此句子中的一组关系R和一组实体<img alt="\nu _{s}" class="mathcode" src="https://private.codecogs.com/gif.latex?%5Cnu%20_%7Bs%7D">，其中每个<img alt="\nu _{i}" class="mathcode" src="https://private.codecogs.com/gif.latex?%5Cnu%20_%7Bi%7D">&nbsp;由一个或一系列token组成，从文本中提取关系是为了识别每个实体对&nbsp;<img alt="\left ( v_{i},v_{j} \right )" class="mathcode" src="https://private.codecogs.com/gif.latex?%5Cleft%20%28%20v_%7Bi%7D%2Cv_%7Bj%7D%20%5Cright%20%29">&nbsp;之间的成对关系<img alt="r_{v_{i},v_{j}}\in R" class="mathcode" src="https://private.codecogs.com/gif.latex?r_%7Bv_%7Bi%7D%2Cv_%7Bj%7D%7D%5Cin%20R">。</p>
+<h2 style="text-indent:0px;"><a name="t9"></a><a name="t9"></a>4.1&nbsp; Encoding Module</h2>
+<p style="text-indent:33px;">为了对实体对（或图中的边）的上下文进行编码，首先将<strong>位置嵌入与句子中的单词嵌入连接起来</strong>：<img alt="E\left ( x_{t}^{i,j} \right )= \left [ x_{t};p_{t}^{i,j} \right ]" class="mathcode" src="https://private.codecogs.com/gif.latex?E%5Cleft%20%28%20x_%7Bt%7D%5E%7Bi%2Cj%7D%20%5Cright%20%29%3D%20%5Cleft%20%5B%20x_%7Bt%7D%3Bp_%7Bt%7D%5E%7Bi%2Cj%7D%20%5Cright%20%5D">；其中&nbsp;<img alt="x_{t}" class="mathcode" src="https://private.codecogs.com/gif.latex?x_%7Bt%7D">&nbsp;表示单词&nbsp;<img alt="x_{t}" class="mathcode" src="https://private.codecogs.com/gif.latex?x_%7Bt%7D">&nbsp;的词嵌入，<img alt="p_{t}^{i,j}" class="mathcode" src="https://private.codecogs.com/gif.latex?p_%7Bt%7D%5E%7Bi%2Cj%7D">&nbsp;表示单词位置 t 相对于实体对的位置 i,j 的位置嵌入。之后<strong>将实体对的表示送入编码器</strong>&nbsp;<img alt="f\left ( \cdot \right )" class="mathcode" src="https://private.codecogs.com/gif.latex?f%5Cleft%20%28%20%5Ccdot%20%5Cright%20%29">，该编码器包含双向LSTM和多层感知器，其中n表示层索引（添加索引意味着网络模型各层参数不同），<img alt="\left [ \cdot \right ]" class="mathcode" src="https://private.codecogs.com/gif.latex?%5Cleft%20%5B%20%5Ccdot%20%5Cright%20%5D">&nbsp;表示将向量转换为矩阵，BiLSTM通过将<strong>前向LSTM的尾部隐藏状态和后向LSTM的头部隐藏状态</strong>串联在一起来编码序列，MLP表示具有非线性激活的多层感知器。</p>
+<p style="text-align:center;"><img alt="" class="has" height="77" src="https://img-blog.csdnimg.cn/20191102172028925.png" width="600"></p>
+<p style="text-indent:0px;"><strong>Word Representations&nbsp; </strong>首先使用词嵌入矩阵<img alt="W_{e}\in \mathbb{R}^{\left | V \right |\times d_{w}}" class="mathcode" src="https://private.codecogs.com/gif.latex?W_%7Be%7D%5Cin%20%5Cmathbb%7BR%7D%5E%7B%5Cleft%20%7C%20V%20%5Cright%20%7C%5Ctimes%20d_%7Bw%7D%7D">，将句子 {x0，x1，...，xl-1} 的每个标记 <img alt="x_{t}" class="mathcode" src="https://private.codecogs.com/gif.latex?x_%7Bt%7D">&nbsp;映射到 k 维嵌入向量<img alt="x_{t}" class="mathcode" src="https://private.codecogs.com/gif.latex?x_%7Bt%7D">，其中| V |是词汇量的大小。 本文中使用60亿大小的语料库进行50维的GloVe嵌入预训练。</p>
+<p><strong>Position Embedding</strong>&nbsp; 将句子中的每个token标记为属于第一实体 <img alt="\nu _{i}" class="mathcode" src="https://private.codecogs.com/gif.latex?%5Cnu%20_%7Bi%7D">，第二实体 <img alt="\nu _{j}" class="mathcode" src="https://private.codecogs.com/gif.latex?%5Cnu%20_%7Bj%7D">&nbsp;或都不属于这两个实体，每个位置标记还通过位置嵌入矩阵<img alt="P\in \mathbb{R}^{3\times d_{p}}" class="mathcode" src="https://private.codecogs.com/gif.latex?P%5Cin%20%5Cmathbb%7BR%7D%5E%7B3%5Ctimes%20d_%7Bp%7D%7D">&nbsp;映射到 <img alt="d_{p}" class="mathcode" src="https://private.codecogs.com/gif.latex?d_%7Bp%7D">&nbsp;维向量，&nbsp;<img alt="p_{t}^{i,j}" class="mathcode" src="https://private.codecogs.com/gif.latex?p_%7Bt%7D%5E%7Bi%2Cj%7D">&nbsp;表示&nbsp;<img alt="x_{t}" class="mathcode" src="https://private.codecogs.com/gif.latex?x_%7Bt%7D">&nbsp;对应于实体对&nbsp;<img alt="\left ( v_{i},v_{j} \right )" class="mathcode" src="https://private.codecogs.com/gif.latex?%5Cleft%20%28%20v_%7Bi%7D%2Cv_%7Bj%7D%20%5Cright%20%29">&nbsp;的位置嵌入。</p>
+<h2 style="text-indent:0px;"><a name="t10"></a><a name="t10"></a>4.2&nbsp; Propagation Module</h2>
+<p style="text-indent:0px;"><strong>The Initial Embeddings of Nodes</strong>&nbsp; 提取实体 <img alt="\nu _{i}" class="mathcode" src="https://private.codecogs.com/gif.latex?%5Cnu%20_%7Bi%7D">&nbsp;和实体 <img alt="\nu _{j}" class="mathcode" src="https://private.codecogs.com/gif.latex?%5Cnu%20_%7Bj%7D">&nbsp;之间的关系，它们的初始嵌入记为&nbsp;<img alt="h_{\nu _{i}}^{\left ( 0 \right )}= a_{subject},h_{\nu j}^{\left ( 0 \right )}= a_{object}" class="mathcode" src="https://private.codecogs.com/gif.latex?h_%7B%5Cnu%20_%7Bi%7D%7D%5E%7B%5Cleft%20%28%200%20%5Cright%20%29%7D%3D%20a_%7Bsubject%7D%2Ch_%7B%5Cnu%20j%7D%5E%7B%5Cleft%20%28%200%20%5Cright%20%29%7D%3D%20a_%7Bobject%7D">，而其他实体的初始嵌入全部设置为零。为头、尾实体的初始嵌入设置特殊值作为一种“flag”消息，并通过传播模块来传递这些消息。 <img alt="a_{subject},a_{object}" class="mathcode" src="https://private.codecogs.com/gif.latex?a_%7Bsubject%7D%2Ca_%7Bobject%7D">&nbsp;也可以携带有关subject和object实体的先验知识，实验中设置&nbsp;<img alt="a_{subject}= \left [ 1;0 \right ]^{T},a_{object}=\left [ 0;1 \right ]^{T}" class="mathcode" src="https://private.codecogs.com/gif.latex?a_%7Bsubject%7D%3D%20%5Cleft%20%5B%201%3B0%20%5Cright%20%5D%5E%7BT%7D%2Ca_%7Bobject%7D%3D%5Cleft%20%5B%200%3B1%20%5Cright%20%5D%5E%7BT%7D">。（门控神经网络思想）</p>
+<p style="text-indent:0;"><strong>Numbers of Layers</strong>&nbsp;&nbsp;在一般图中，层数K选择为图直径（<em>怎么判断图直径</em>）的数量级，以便所有节点都从整个图中获取信息。 但是由于本文中图紧密连接，层数可理解为赋予模型更多的表达能力。</p>
+<h2 style="text-indent:0px;"><a name="t11"></a><a name="t11"></a>4.3&nbsp; Classification Module</h2>
+<p style="text-indent:33px;">输出模块将目标实体对&nbsp;<img alt="\left ( v_{i},v_{j} \right )" class="mathcode" src="https://private.codecogs.com/gif.latex?%5Cleft%20%28%20v_%7Bi%7D%2Cv_%7Bj%7D%20%5Cright%20%29">&nbsp;的嵌入作为输入，这些嵌入首先由（6）转换，其中&nbsp;<img alt="\odot" class="mathcode" src="https://private.codecogs.com/gif.latex?%5Codot">&nbsp;表示逐元素相乘。公式（7）用于分类，其中<img alt="r_{\nu _{i,\upsilon _{j}}}\in R" class="mathcode" src="https://private.codecogs.com/gif.latex?r_%7B%5Cnu%20_%7Bi%2C%5Cupsilon%20_%7Bj%7D%7D%7D%5Cin%20R">，MLP表示多层感知器模块，使用交叉熵（8）作为分类损失，其中<img alt="r_{\nu _{i,\upsilon _{j}}}" class="mathcode" src="https://private.codecogs.com/gif.latex?r_%7B%5Cnu%20_%7Bi%2C%5Cupsilon%20_%7Bj%7D%7D%7D">&nbsp;表示实体对&nbsp;<img alt="\left ( v_{i},v_{j} \right )" class="mathcode" src="https://private.codecogs.com/gif.latex?%5Cleft%20%28%20v_%7Bi%7D%2Cv_%7Bj%7D%20%5Cright%20%29">&nbsp;的关系标签，S表示整个语料库。 实验中将每个目标实体对的嵌入表示堆叠在一起，以推断每对实体之间的潜在关系。</p>
+<p style="text-align:center;"><img alt="" class="has" height="58" src="https://img-blog.csdnimg.cn/2019110316372496.png" width="500"></p>
+<p style="text-align:center;"><img alt="" class="has" height="55" src="https://img-blog.csdnimg.cn/20191103163736856.png" width="500"></p>
+<p style="text-align:center;"><img alt="" class="has" height="72" src="https://img-blog.csdnimg.cn/20191103163746275.png" width="450"></p>
+<h1 style="text-indent:0px;"><a name="t12"></a><a name="t12"></a>5&nbsp; Experiments</h1>
+<p style="text-indent:33px;">实验主要目的是：（1）证明本文的最佳模型可以在各种设置下提高关系提取的表现；（2）说明层数如何影响模型的性能；（3）进行定性研究以突出本文模型与基准模型之间的差异。 在第（1）部分和第（2）部分中，进行了三个子实验：（i）将首先证明本文模型可以提高人工标注测试集上的实例级关系提取，（ii）然后证明所提模型可以帮助提高在远距离标记的测试集上的袋级关系提取的性能，并且（iii）还拆分了远距离标记的测试集的子集，其中实体和边的数量很大。</p>
+<h2 style="text-indent:0px;"><a name="t13"></a><a name="t13"></a>5.1&nbsp; Experiments</h2>
+<h3><a name="t14"></a><a name="t14"></a>5.1.1&nbsp; Datasets</h3>
+<p><strong>Distantly labeled set&nbsp;&nbsp;</strong>Sorokin和Gurevych用Wikipedia语料库提出了一个数据集，本文任务与其任务之间有一个小区别：本文任务是<strong>提取句子中每对实体之间的关系</strong>，而他们的任务是提取给定实体对与上下文实体对之间的关系。 因此需要修改其数据集：1）如果给定三元组中缺少<span style="color:#f33b45;">反向边？？</span>，例如如果句子中存在三元组（Earth, partof, SolarSystem），则向其添加一个反向标签（Solar System, partof, Earth）<span style="color:#f33b45;">如何添加</span>；2）对于所有没有关系的实体对，在它们之间添加了“NA”标签，对所有实验都使用相同的训练集。</p>
+<p><strong>Human annotated test set&nbsp;</strong> 根据Sorokin and Gurevych提供的测试集，需要5个annotator标记数据集，被用来决定是否对每一对实体都使用远程监督，只有所有5个annotator都接受的实例才合并到人工标注的测试集中，最终测试集中有350个句子和1,230个三元组。<br><strong>Dense distantly labeled test set</strong>&nbsp; 进一步从远距离标记的测试集中拆分出一个密集的测试集，标准是：实体数量应严格大于2；句子的真实标签中必须至少有一个圆（至少有三个实体）（圆的每个边都有一个非“NA”标签）。该测试集可用于测试论文方法在实体之间具有复杂相互作用的句子上的表现，该测试集中有1,350个句子、超过17,915个三元组和7,906个关系。</p>
+<h3><a name="t15"></a><a name="t15"></a>5.1.2&nbsp; Models for Comparison</h3>
+<h3><a name="t16"></a><a name="t16"></a>5.1.3&nbsp; Hyper-parameters</h3>
+<p style="text-align:center;"><img alt="" class="has" height="298" src="https://img-blog.csdnimg.cn/20191104095705561.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="450"></p>
+<h2><a name="t17"></a><a name="t17"></a>5.2&nbsp; Evaluation Details</h2>
+<h2><a name="t18"></a><a name="t18"></a>5.3&nbsp; Effectiveness of Reasoning Mechanism</h2>
+<p style="text-indent:33px;">从表2和表3中可以看出，本文最佳模型在所有三个测试集上的性能均明显优于所有基模型。这些结果表明GP-GNN模型可以使用自然语言生成的参数对完全连接的图成功进行推理。这些结果还表明本模型不仅在句子级关系提取上表现良好，而且在袋级关系提取上也有所改进。请注意，Context-Aware&nbsp;RE还结合了上下文信息来预测目标实体对的关系，但是Contect-Aware&nbsp;RE仅对各种关系的共现建模，而忽略了上下文关系是否参与了目标实体对的关系提取的推理的过程。Context-Aware RE可能会引入更多的噪音，因为它可能会错误地增加与具有上下文关系的相似主题的关系的可能性。另一个发现是，在这三个数据集中，GP-GNN＃layers = 1版本优于CNN和PCNN，一个可能的原因是，维基百科语料库中的句子很复杂，对于CNN和PCNN而言可能很难建模。 Zhang和Wang（2015）也得出了类似的结论。</p>
+<p style="text-align:center;"><img alt="" class="has" height="271" src="https://img-blog.csdnimg.cn/20191104110908402.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="500"></p>
+<p style="text-align:center;"><img alt="" class="has" height="273" src="https://img-blog.csdnimg.cn/20191104110939624.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="1000"></p>
+<h2 style="text-indent:0px;"><a name="t19"></a><a name="t19"></a>5.4&nbsp; The Effectiveness of the Number of Layers</h2>
+<p style="text-indent:33px;">层数表示模型的推理能力，K层模型具有推断K跳关系的能力。为了证明层数的影响，比较了具有不同层数的模型。从表2和表3中可以看到，在所有三个数据集上，三层模型均达到最佳。从图3中还可以看到，随着层数的增加，曲线变得越来越精确，这表明在推理中考虑更多hops会导致更好的表现。但是在整个远程监督测试集上，第三层的提升要比在密集子集上的提升小得多。这种观测表明推理机制可以帮助识别关系，尤其是在存在更多实体的句子上。还可以看到，在带有人工标注的测试集上，3层模型比2层模型相比2层模型比1层模型有更大的提升，可能是由于袋级关系提取更加容易的原因。在实际应用中，可以为不同类型的句子选择不同的变量，或也可以将来自不同模型的预测整合在一起。</p>
+<p style="text-align:center;"><img alt="" class="has" height="783" src="https://img-blog.csdnimg.cn/20191104112450548.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="500"></p>
+<h2 style="text-indent:0px;"><a name="t20"></a><a name="t20"></a>5.5&nbsp; Qualitative Results：Case Study</h2>
+<p style="text-align:center;"><img alt="" class="has" height="744" src="https://img-blog.csdnimg.cn/20191104152810726.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70" width="1200"></p>
+<h1 style="text-indent:0px;"><a name="t21"></a><a name="t21"></a>6&nbsp; Conclusion and Future Work</h1>
+<p style="text-indent:33px;">解决了利用GNN与自然语言进行关系推理的问题，提出的模型GP-GNNs<strong>通过将自然语言编码为参数并执行层与层之间的传播来解决关系消息传递任务</strong>。 新模型也可以被认为是解决非文本输入（例如文本，图像，视频，音频）的图生成问题的通用框架。在这项工作中，证明了其在预测自然语言和袋级实体之间的关系方面的有效性，并表明通过在推理中考虑更多跃点，关系提取的效果可以得到显着改善。</p>
+<p style="text-indent:33px;">&nbsp;</p>
+<p style="text-indent:33px;">&nbsp;</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%AE%BA%E6%96%87%E8%AE%B0%E5%BD%95/" rel="tag"># 论文记录</a>
+              <a href="/tags/NLP/" rel="tag"># NLP</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/03/04/article-1/" rel="prev" title="《GraphRel：Modeling Text as Relational Graphs for Joint Entity and Relation Extraction》阅读记录">
+      <i class="fa fa-chevron-left"></i> 《GraphRel：Modeling Text as Relational Graphs for Joint Entity and Relation Extraction》阅读记录
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/03/04/article/" rel="next" title="《Attention Guided Graph Convolutional Networks for Relation Extraction》阅读记录">
+      《Attention Guided Graph Convolutional Networks for Relation Extraction》阅读记录 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#abstract"><span class="nav-number">1.</span> <span class="nav-text"> Abstract</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">2.</span> <span class="nav-text">1 Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">3.</span> <span class="nav-text">2&amp;nbsp; Related Work</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">4.</span> <span class="nav-text">3&amp;nbsp; GP-GNNs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">4.1.</span> <span class="nav-text">3.1&amp;nbsp; Encoding Module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">4.2.</span> <span class="nav-text">3.2&amp;nbsp; Propagation Module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">4.3.</span> <span class="nav-text">3.3&amp;nbsp; Classification Module</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">5.</span> <span class="nav-text">4&amp;nbsp; Relation Extraction with GP-GNNs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">5.1.</span> <span class="nav-text">4.1&amp;nbsp; Encoding Module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">5.2.</span> <span class="nav-text">4.2&amp;nbsp; Propagation Module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">5.3.</span> <span class="nav-text">4.3&amp;nbsp; Classification Module</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">6.</span> <span class="nav-text">5&amp;nbsp; Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">6.1.</span> <span class="nav-text">5.1&amp;nbsp; Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">6.1.1.</span> <span class="nav-text">5.1.1&amp;nbsp; Datasets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">6.1.2.</span> <span class="nav-text">5.1.2&amp;nbsp; Models for Comparison</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">6.1.3.</span> <span class="nav-text">5.1.3&amp;nbsp; Hyper-parameters</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">6.2.</span> <span class="nav-text">5.2&amp;nbsp; Evaluation Details</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">6.3.</span> <span class="nav-text">5.3&amp;nbsp; Effectiveness of Reasoning Mechanism</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">6.4.</span> <span class="nav-text">5.4&amp;nbsp; The Effectiveness of the Number of Layers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">6.5.</span> <span class="nav-text">5.5&amp;nbsp; Qualitative Results：Case Study</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-number">7.</span> <span class="nav-text">6&amp;nbsp; Conclusion and Future Work</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">R</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">R</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.7.2
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

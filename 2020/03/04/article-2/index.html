@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Gemini","version":"7.7.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":false,"style":"mac"},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":true,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="Abstract 近年来，在机器学习领域，关系推理的改进取得了进展。在现有模型中，图神经网络是多跳关系推理的最有效方法之一。事实上，多跳关系推理在许多自然语言处理任务中是不可缺少的，例如关系抽取。本文通过自然语言语句提出带有生成参数的图神经网络，使图神经网络能够处理非结构化文本输入的关系推理。在一个人工标注数据和两个远程监督数据集上的实验结果表明，与baseline相比，GP-GNN模型取得了显">
+  <meta name="description" content="近年来，在机器学习领域，关系推理的改进取得了进展。在现有模型中，图神经网络是多跳关系推理的最有效方法之一。事实上，多跳关系推理在许多自然语言处理任务中是不可缺少的，例如关系抽取。本文通过自然语言语句提出带有生成参数的图神经网络，使图神经网络能够处理非结构化文本输入的关系推理。在一个人工标注数据和两个远程监督数据集上的实验结果表明，与baseline相比，GP-GNN模型取得了显著的提升。Case">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《Graph Neural Networks with Generated Parameters for Relation Extraction》阅读笔记">
 <meta property="og:url" content="http://yoursite.com/2020/03/04/article-2/index.html">
 <meta property="og:site_name" content="想吃煎饼果子">
-<meta property="og:description" content="Abstract 近年来，在机器学习领域，关系推理的改进取得了进展。在现有模型中，图神经网络是多跳关系推理的最有效方法之一。事实上，多跳关系推理在许多自然语言处理任务中是不可缺少的，例如关系抽取。本文通过自然语言语句提出带有生成参数的图神经网络，使图神经网络能够处理非结构化文本输入的关系推理。在一个人工标注数据和两个远程监督数据集上的实验结果表明，与baseline相比，GP-GNN模型取得了显">
+<meta property="og:description" content="近年来，在机器学习领域，关系推理的改进取得了进展。在现有模型中，图神经网络是多跳关系推理的最有效方法之一。事实上，多跳关系推理在许多自然语言处理任务中是不可缺少的，例如关系抽取。本文通过自然语言语句提出带有生成参数的图神经网络，使图神经网络能够处理非结构化文本输入的关系推理。在一个人工标注数据和两个远程监督数据集上的实验结果表明，与baseline相比，GP-GNN模型取得了显著的提升。Case">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191031201957110.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://private.codecogs.com/gif.latex?G%253D%5Cleft%20(%20%5Cnu%252C%5Cvarepsilon%20%5Cright%20)">
@@ -83,7 +83,7 @@
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191104112450548.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20191104152810726.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQwOTMxMTgx,size_16,color_FFFFFF,t_70">
 <meta property="article:published_time" content="2020-03-04T10:48:21.000Z">
-<meta property="article:modified_time" content="2020-03-04T12:23:05.701Z">
+<meta property="article:modified_time" content="2020-03-05T09:43:10.573Z">
 <meta property="article:author" content="R">
 <meta property="article:tag" content="论文记录">
 <meta property="article:tag" content="NLP">
@@ -239,10 +239,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-03-04 18:48:21 / 修改时间：20:23:05" itemprop="dateCreated datePublished" datetime="2020-03-04T18:48:21+08:00">2020-03-04</time>
+              <time title="创建时间：2020-03-04 18:48:21" itemprop="dateCreated datePublished" datetime="2020-03-04T18:48:21+08:00">2020-03-04</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-03-05 17:43:10" itemprop="dateModified" datetime="2020-03-05T17:43:10+08:00">2020-03-05</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -285,8 +291,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="abstract"><a class="markdownIt-Anchor" href="#abstract"></a> Abstract</h1>
-<p>近年来，在机器学习领域，关系推理的改进取得了进展。在现有模型中，图神经网络是多跳关系推理的最有效方法之一。事实上，多跳关系推理在许多自然语言处理任务中是不可缺少的，例如关系抽取。本文通过自然语言语句提出带有生成参数的图神经网络，使图神经网络能够处理非结构化文本输入的关系推理。在一个人工标注数据和两个远程监督数据集上的实验结果表明，与baseline相比，GP-GNN模型取得了显著的提升。Case Study 可看到模型可以通过多跳关系推理发现更准确的关系。</p>
+        <p>近年来，在机器学习领域，关系推理的改进取得了进展。在现有模型中，图神经网络是多跳关系推理的最有效方法之一。事实上，多跳关系推理在许多自然语言处理任务中是不可缺少的，例如关系抽取。本文通过自然语言语句提出带有生成参数的图神经网络，使图神经网络能够处理非结构化文本输入的关系推理。在一个人工标注数据和两个远程监督数据集上的实验结果表明，与baseline相比，GP-GNN模型取得了显著的提升。Case Study 可看到模型可以通过多跳关系推理发现更准确的关系。</p>
 <a id="more"></a>
 <h1><a name="t2"></a><a name="t2"></a>1 Introduction</h1>
 <p style="text-indent:33px;">近年来，图神经网络已被应用于机器学习的各个领域，包括节点分类、关系分类、分子性质预测、小样本学习，并在这些任务上取得了优秀的成果，证明了GNNs处理图关系推理的强大能力。<strong>关系推理旨在抽象地推理实体/对象及其关系——给定一个具有m个实体的文本序列，对文本和实体进行推理并预测实体或实体对的类别</strong>。除了图之外，关系推理在许多自然语言处理任务中也很重要，如问答、关系抽取、摘要等。考虑图1所示的例子，现有的关系抽取模型可以很容易地抽取出Luc Besson导演的电影《Leon：The Professional》和这部电影是English的事实，但是如果没有多跳关系推理，就无法推断出Luc Besson和English之间的关系。通过对推理模式的研究，可以发现Luc Besson会说英语，遵循<em>“Luc Besson执导的《Leon：The Professional》这部电影是用English拍摄的，表明Luc Besson会说English” </em>这一推理逻辑。然而，大多数现有的GNNs只能处理<strong>预定义图上</strong>的多跳关系推理，不能直接应用于自然语言关系推理。在自然语言中实现多跳关系推理仍然是一个未解决的问题。</p>
@@ -453,7 +458,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#abstract"><span class="nav-text"> Abstract</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-text">1 Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-text">2&amp;nbsp; Related Work</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-text">3&amp;nbsp; GP-GNNs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-text">3.1&amp;nbsp; Encoding Module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-text">3.2&amp;nbsp; Propagation Module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-text">3.3&amp;nbsp; Classification Module</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-text">4&amp;nbsp; Relation Extraction with GP-GNNs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-text">4.1&amp;nbsp; Encoding Module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-text">4.2&amp;nbsp; Propagation Module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-text">4.3&amp;nbsp; Classification Module</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-text">5&amp;nbsp; Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-text">5.1&amp;nbsp; Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-text">5.1.1&amp;nbsp; Datasets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-text">5.1.2&amp;nbsp; Models for Comparison</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-text">5.1.3&amp;nbsp; Hyper-parameters</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-text">5.2&amp;nbsp; Evaluation Details</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-text">5.3&amp;nbsp; Effectiveness of Reasoning Mechanism</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-text">5.4&amp;nbsp; The Effectiveness of the Number of Layers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-text">5.5&amp;nbsp; Qualitative Results：Case Study</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-text">6&amp;nbsp; Conclusion and Future Work</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-text">1 Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-text">2&amp;nbsp; Related Work</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-text">3&amp;nbsp; GP-GNNs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-text">3.1&amp;nbsp; Encoding Module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-text">3.2&amp;nbsp; Propagation Module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-text">3.3&amp;nbsp; Classification Module</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-text">4&amp;nbsp; Relation Extraction with GP-GNNs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-text">4.1&amp;nbsp; Encoding Module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-text">4.2&amp;nbsp; Propagation Module</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-text">4.3&amp;nbsp; Classification Module</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-text">5&amp;nbsp; Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-text">5.1&amp;nbsp; Experiments</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-text">5.1.1&amp;nbsp; Datasets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-text">5.1.2&amp;nbsp; Models for Comparison</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-text">5.1.3&amp;nbsp; Hyper-parameters</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-text">5.2&amp;nbsp; Evaluation Details</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-text">5.3&amp;nbsp; Effectiveness of Reasoning Mechanism</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-text">5.4&amp;nbsp; The Effectiveness of the Number of Layers</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-text">5.5&amp;nbsp; Qualitative Results：Case Study</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#null"><span class="nav-text">6&amp;nbsp; Conclusion and Future Work</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
